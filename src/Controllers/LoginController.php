@@ -8,27 +8,27 @@ use Models\UsuarioModel;
 
 class LoginController 
 {
-
     public function canIenter(Request $request, Response $response, $args)
     {
+        
         $UM = new UsuarioModel;
-        $userModel = $UM->getAll();
         $post = $request->getParsedBody();
+        $userModel = $UM->getAll();
         $email = $post['email'];
         $senha = $post['senha'];
       
         if (!is_null($userModel['error'])) 
         {
-            if ($email == $userModel['user-info']['email'])
+            if ($email == $userModel['user']['email'])
             {
-                if($senha == $userModel['user-info']['senha'])
+                if($senha == $userModel['user']['senha'])
                 {
-                    if($userModel['user-info']['status'] == 'ATIVE') 
+                    if($userModel['user']['status'] == 'ATIVE') 
                     {
                         $result['error'] = FALSE;
                         $result['error-type'] = NULL;
                         $result['message'] = 'Bem-vindo';
-                        $result['data'] = $userModel['user-info'];
+                        $result['data'] = $userModel['user'];
                     }
                     else 
                     {
