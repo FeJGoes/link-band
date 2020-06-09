@@ -1,5 +1,8 @@
 <?php
 
-require 'app/services/AuthService.php';
 require 'vendor/autoload.php';
-require 'routes/router.php';
+// Carrega as variáveis ambiente do arquivo .ENV
+(Dotenv\Dotenv::createImmutable(__DIR__))->load();
+
+require 'router/router.php';
+require 'app/services/Middleware.php';

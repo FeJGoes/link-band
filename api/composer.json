@@ -7,17 +7,19 @@
         "guzzlehttp/psr7": "^1.6",
         "http-interop/http-factory-guzzle": "^1.0",
         "laminas/laminas-diactoros": "^2.2",
-        "tuupola/slim-basic-auth": "^3.2"
+        "tuupola/slim-basic-auth": "^3.2",
+        "vlucas/phpdotenv": "^4.1"
     },
     "autoload": {
         "psr-4": {
-            "App\\Controllers\\": "app/controllers/",
-            "App\\Models\\": "app/models/",
-            "App\\Services\\": "app/services/",
-            "App\\Libs\\": "app/libs/",
-            "Configs\\": "config/",
-            "Routes\\": "routes/",
-            "Database\\": "database/"
+            "Controllers\\": "app/controllers/",
+            "Models\\": "app/models/",
+            "Dao\\": "app/models/dao",
+            "Services\\": "app/services/",
+            "Libs\\": "libs/",
+            "Configs\\": "configs/",
+            "Router\\": "router/",
+            "DB\\": "database/"
         }
     }
 }
