@@ -1,0 +1,17 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^5.0",
+        "phpmailer/phpmailer": "^6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controllers\\" : "app/controllers/",
+            "Models\\"      : "app/models/",
+            "Dao\\"         : "app/models/dao",
+            "Services\\"    : "app/services/",
+            "Configs\\"     : "configs/",
+            "Router\\"      : "router/", 
+            "Database\\"    : "database/"
+        }
+    }
+}
