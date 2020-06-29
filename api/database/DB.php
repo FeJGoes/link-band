@@ -13,8 +13,7 @@ class DB
      */
     public static function linkeband() 
     {
-        return new PDO (
-                        "mysql:dbname=".getenv('DB_NAME').";host=".getenv('DB_HOST'), 
+        return new PDO ("mysql:dbname=".getenv('DB_NAME').";host=".getenv('DB_HOST'), 
                         getenv('DB_USER'), getenv('DB_PASS'), 
                         [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
                          PDO::ATTR_ERRMODE, 

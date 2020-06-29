@@ -1,5 +1,5 @@
 <?php
-namespace Dao;
+namespace Models\Dao;
 
 use DB\DB;
 use PDO;

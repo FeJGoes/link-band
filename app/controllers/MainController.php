@@ -4,36 +4,37 @@ namespace Controllers;
 
 use Controllers\Controller;
 
-class HomeController
+class MainController
 {
-    public static function pageHome()
+    public static function pageMain()
 	{
-		$Controller = new Controller;
+        $Controller = new Controller;
+        
         /**
          * @var $title innerText da TAG <title>
          */
-        $title ='Home-Link&Band';
+        $title ='Link&Band';
 
         /**
          * @method array setCss() Acrescenta os arquivos css nesta requisição
          */
-        $Controller->setCss(['']);
+        $Controller->setCss(['main.css']);
 
 		/**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
-        $Controller->setJs(['']);
+        // $Controller->setJs(['']);
 
-         /**
+        /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
-		$Controller->setView(['home.php']);
+		$Controller->setView(['main.php']);
 
 		/**
 		 * Dados a ser utilizados na view
 		 */
         
-		$param = '';
+		$param ='';
 
 		/**
 		 * Renderizar a config

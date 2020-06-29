@@ -1,16 +1,20 @@
 <header id="main-header">
-    <figure id="nav-logo">
-        <a href="">
-            <img id="logo" src="<?=HOST.IMGS_DIR?>logo.png" alt="">
+    <div id="nav-logo" class="uk-flex uk-flex-around">
+        <a href="<?=HOST?>">
+            <img id="logo" src="<?=HOST.IMGS_DIR?>logo/logo-linkeband-palheta.png" width="80">
         </a>
-    </figure>
+
+        <div>
+            <h5 class="white-text">Link&Band</h5>
+        </div>
+    </div>
 
     <nav id="nav-header">
         <ul>
             <li><a href="" class="nav-item active">início</a></li>
             <li><a href="" class="nav-item">sobre</a></li>
-            <li><a href="" class="nav-item">nossa equipe</a></li>
-            <li><a href="" class="nav-item">área do usuário</a></li>
+            <li><a href="" class="nav-item">nosso time</a></li>
+            <li><a href="<?=HOST?>login" class="nav-item">entrar</a></li>
         </ul>
     </nav>
 </header>

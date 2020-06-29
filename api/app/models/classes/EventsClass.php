@@ -1,11 +1,11 @@
 <?php
-namespace Models;
+namespace Models\Classes;
 
-use Dao\EventDao;
+use Models\Dao\EventsDao;
 use DateTime;
 use Services\Utils;
 
-class EventModel
+class EventsClass
 {
    
     /**
@@ -179,7 +179,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setResponsavel(int $responsavel)
+    public function setResponsavel(?int $responsavel)
     {
         if(!empty($responsavel))
             if(is_numeric($responsavel))
@@ -208,7 +208,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setTitulo(String $titulo)
+    public function setTitulo(?String $titulo)
     {
         if(!empty($titulo))
             if(strlen($titulo)<=50)
@@ -238,7 +238,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setDescricao(String $descricao)
+    public function setDescricao(?String $descricao)
     {
         if(!empty($descricao))
             $this->descricao = $descricao;
@@ -265,7 +265,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setData(String $data)
+    public function setData(?String $data)
     {
         if(!empty($data))
             if(DateTime::createFromFormat('Y-m-d',$data)!==FALSE)
@@ -281,7 +281,7 @@ class EventModel
      *
      * @return  String
      */ 
-    public function gethora()
+    public function getHora()
     {
         return $this->hora;
     }
@@ -293,7 +293,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function sethora(String $hora)
+    public function setHora(?String $hora)
     {
         if(!empty($hora))
             if(DateTime::createFromFormat('H:i',$hora)!==FALSE)
@@ -321,7 +321,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setLat(String $lat)
+    public function setLat($lat)
     {
         if(!empty($lat))
             if(strlen($lat)<=50)
@@ -351,7 +351,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setLong(String $long)
+    public function setLong($long)
     {
         if(!empty($long))
             if(strlen($long)<=50)
@@ -381,7 +381,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setTelefone(String $telefone)
+    public function setTelefone(?String $telefone)
     {
         if(!empty($telefone))
             if(Utils::isValidPhone($telefone)!==FALSE)
@@ -411,7 +411,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setCelular(String $celular)
+    public function setCelular(?String $celular)
     {
         if(!empty($celular))
             if(Utils::isValidPhone($celular)!==FALSE)
@@ -441,7 +441,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setCep(String $cep)
+    public function setCep(?String $cep)
     {
         if(!empty($cep))
             if(Utils::isValidZipcode($cep)!==FALSE)
@@ -471,7 +471,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setLogradouro(String $logradouro)
+    public function setLogradouro(?String $logradouro)
     {
         if(!empty($logradouro))
             if(strlen($logradouro)<=150)
@@ -501,7 +501,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setNumero(Int $numero)
+    public function setNumero(?Int $numero)
     {
         if(!empty($numero))
             if(strlen((string) $numero)<=6)
@@ -531,7 +531,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setBairro(String $bairro)
+    public function setBairro(?String $bairro)
     {
         if(!empty($bairro))
             if(strlen($bairro)<=100)
@@ -561,7 +561,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setComplemento(String $complemento)
+    public function setComplemento(?String $complemento)
     {
         if(!empty($complemento))
             if(strlen($complemento)<=150)
@@ -591,7 +591,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setCidade(String $cidade)
+    public function setCidade(?String $cidade)
     {
         if(!empty($cidade))
             if(strlen($cidade)<=100)
@@ -621,10 +621,10 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setEstado(String $estado)
+    public function setEstado(?String $estado)
     {
         $validos =array("AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN","RO", "RS", "RR", "SC", "SE", "SP", "TO");
-        if(!empty($cidade))
+        if(!empty($estado))
             if(in_array($estado,$validos))
                 $this->estado = $estado;
             else
@@ -652,10 +652,10 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setStatus(String $status='ABERTO')
+    public function setStatus(?String $status='ABERTO')
     {
         $validos =array('ABERTO','FINALIZADO');
-        if(!empty($cidade))
+        if(!empty($status))
             if(in_array($status,$validos))
                 $this->status = $status;
             else
@@ -683,9 +683,9 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setUrlImg(string $urlImg)
+    public function setUrlImg(?String $urlImg)
     {
-        if(!empty($cidade))
+        if(!empty($urlImg))
             if(strlen($urlImg)<=250)
                 $this->urlImg = $urlImg;
             else
@@ -713,7 +713,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setCriadoEm(String $criadoEm)
+    public function setCriadoEm(?String $criadoEm)
     {
         if(!empty($criadoEm))
             if(DateTime::createFromFormat('Y-m-d',$criadoEm)!==FALSE)
@@ -741,7 +741,7 @@ class EventModel
      *
      * @return  self
      */ 
-    public function setUltimaMod(String $ultimaMod)
+    public function setUltimaMod(?String $ultimaMod)
     {
         if(!empty($ultimaMod))
             if(DateTime::createFromFormat('Y-m-d',$ultimaMod)!==FALSE)
@@ -766,7 +766,7 @@ class EventModel
     {
         if($this->getError()===FALSE)
         {
-            $consulta =EventDao::create(
+            $consulta =EventsDao::create(
                 $this->getResponsavel(),
                 $this->getTitulo(),
                 $this->getDescricao(),
@@ -808,7 +808,7 @@ class EventModel
      */
     public function listByOwner($idResponsavel) :Array
     {
-        $consulta =EventDao::listEventByOwner($idResponsavel);
+        $consulta =EventsDao::listEventByOwner($idResponsavel);
         if(!empty($consulta))
             $response =array(
                 "status"  =>"ok",
@@ -827,7 +827,7 @@ class EventModel
      */
     public function getEventById(Int $id) :Array
     {
-        $consulta =EventDao::getEventById($id);
+        $consulta =EventsDao::getEventById($id);
         if(!empty($consulta))
             $response =array(
                 "status"  =>"ok",
@@ -854,7 +854,7 @@ class EventModel
     // {
     //     if($this->getError()===FALSE)
     //     {
-    //         $consulta =EventDao::update(
+    //         $consulta =EventsDao::update(
     //             $id,
     //             $this->getNome(),
     //             $this->getEmail(),
@@ -884,7 +884,7 @@ class EventModel
      */
     public function delete(Int $id) :Array
     {
-        $consulta =EventDao::delete($id);
+        $consulta =EventsDao::delete($id);
         if(!empty($consulta))
             $response =array(
                 "status"  =>"ok",

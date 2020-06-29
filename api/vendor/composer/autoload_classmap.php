@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Controllers\\UserControllers' => $baseDir . '/app/controllers/UserControllers.php',
     'DB\\DB' => $baseDir . '/database/DB.php',
-    'Dao\\UserDao' => $baseDir . '/app/models/dao/UserDao.php',
     'Dotenv\\Dotenv' => $vendorDir . '/vlucas/phpdotenv/src/Dotenv.php',
     'Dotenv\\Exception\\ExceptionInterface' => $vendorDir . '/vlucas/phpdotenv/src/Exception/ExceptionInterface.php',
     'Dotenv\\Exception\\InvalidFileException' => $vendorDir . '/vlucas/phpdotenv/src/Exception/InvalidFileException.php',
@@ -142,7 +141,6 @@ return array(
     'Laminas\\ZendFrameworkBridge\\Module' => $vendorDir . '/laminas/laminas-zendframework-bridge/src/Module.php',
     'Laminas\\ZendFrameworkBridge\\Replacements' => $vendorDir . '/laminas/laminas-zendframework-bridge/src/Replacements.php',
     'Laminas\\ZendFrameworkBridge\\RewriteRules' => $vendorDir . '/laminas/laminas-zendframework-bridge/src/RewriteRules.php',
-    'Models\\UserModel' => $baseDir . '/app/models/UserModel.php',
     'Nyholm\\Psr7Server\\ServerRequestCreator' => $vendorDir . '/nyholm/psr7-server/src/ServerRequestCreator.php',
     'Nyholm\\Psr7Server\\ServerRequestCreatorInterface' => $vendorDir . '/nyholm/psr7-server/src/ServerRequestCreatorInterface.php',
     'Nyholm\\Psr7\\Factory\\HttplugFactory' => $vendorDir . '/nyholm/psr7/src/Factory/HttplugFactory.php',

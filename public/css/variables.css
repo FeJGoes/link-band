@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Mosk';
+    src:  url('../fonts/Mosk-Normal-400.ttf') format('truetype');
+}
+
+:root {
+    --color-pri:#222831;
+    --color-sec:#393e46;
+    --color-ter:#7971ea;
+    --color-text:#eeeeee;
+}
+
+.white-text {
+    color: var(--color-text) !important;
+}
+
+.lb-button {
+    color: white !important;
+    border-radius: 5px !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+    width: 30%;
+    height: 3em;
+    padding: .5px;
+    border-style: none;
+}
+
+.lb-button:hover {
+    filter: brightness(80%);
+}
+
+.lb-button-primary {
+    background: var(--color-ter);
+}
+
+.lb-button-default {
+    background: rgba(0, 0, 0, 0);
+    color: var(--color-sec) !important;
+    border: 0.5px solid var(--color-sec);
+}
+
+.lb-button-default:hover {
+    background: rgba(0, 0, 0, 0.05);
+}

@@ -6,7 +6,7 @@ class Utils
 {
     public static function isValidPhone(string $str) 
     {
-        return preg_match('/(?\d{2}\)?\s)?(\d{4,5}\-\d{4}/',$str);
+        return preg_match('/(\(\d{2}\)\s)?(\d{4,5}\-\d{4})/',$str);
     }
 
     public static function isValidZipcode(string $str) 

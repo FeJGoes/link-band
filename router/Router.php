@@ -1,20 +1,23 @@
 <?php
 
-// use Controllers\{HomeController};
-
 
 class Router 
 {
      public function __construct(string $path)
      {
           $route['/'] =array(
-               'controller'=>'HomeController',
-               'action'    =>'pageHome'
+               'controller'=>'MainController',
+               'action'    =>'pageMain'
           );
 
-          $route['/home'] =array(
-               'controller'=>'HomeController',
-               'action'    =>'pageHome'
+          $route['/login'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'pageSignIn'
+          );
+
+          $route['/new'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'pageCreate'
           );
 
           if (array_key_exists($path, $route)) 

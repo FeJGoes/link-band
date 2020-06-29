@@ -1,54 +1,54 @@
 <?php
-namespace Models;
+namespace Models\Classes;
 
-use Dao\UserDao;
+use Models\Dao\UserDao;
 
-class UserModel
+class UserClass
 {
     /**
-     * @var string  
+     * @var String  
      */
-    private string $nome;
+    private String $nome;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $email;
+    private String $email;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $senha;
+    private String $senha;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $tipo;
+    private String $tipo;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $status;
+    private String $status;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $permissao;
+    private String $permissao;
 
     /**
-     * @var bool  
+     * @var Bool  
      */
-    private bool $error =FALSE;
+    private Bool $error =FALSE;
 
     /**
-     * @var string  
+     * @var String  
      */
-    private string $errorMsg;
+    private String $errorMsg;
 
     /**
      * Get the value of error
      *
-     * @return  bool
+     * @return  Bool
      */ 
     public function getError()
     {
@@ -58,11 +58,11 @@ class UserModel
     /**
      * Set the value of error
      *
-     * @param  bool  $error
+     * @param  Bool  $error
      *
      * @return  self
      */ 
-    public function setError(bool $error)
+    public function setError(Bool $error)
     {
         $this->error = $error;
 
@@ -72,7 +72,7 @@ class UserModel
     /**
      * Get the value of errorMsg
      *
-     * @return  string
+     * @return  String
      */ 
     public function getErrorMsg()
     {
@@ -82,11 +82,11 @@ class UserModel
     /**
      * Set the value of errorMsg
      *
-     * @param  string  $errorMsg
+     * @param  String  $errorMsg
      *
      * @return  self
      */ 
-    public function setErrorMsg(string $errorMsg)
+    public function setErrorMsg(String $errorMsg)
     {
         $this->errorMsg = $errorMsg;
         $this->error    = TRUE;
@@ -97,7 +97,7 @@ class UserModel
     /**
      * Get the value of nome
      *
-     * @return  string
+     * @return  String
      */ 
     public function getNome()
     {
@@ -107,19 +107,19 @@ class UserModel
     /**
      * Set the value of nome
      *
-     * @param  string  $nome
+     * @param  String  $nome
      *
      * @return  self
      */ 
-    public function setNome(string $nome)
+    public function setNome(String $nome)
     {
         if(!empty($nome))
             if(strlen($nome)<=50)
                 $this->nome = $nome;
             else
-                $this->setErrorMsg('O nome ultrapassou o limite de 50 caracteres');
+                $this->setErrorMsg('[nome] - ultrapassou o limite de 50 caracteres');
         else
-            $this->setErrorMsg('O nome está vazio');
+            $this->setErrorMsg('[nome] - está vazio');
 
         return $this;
     }
@@ -127,7 +127,7 @@ class UserModel
     /**
      * Get the value of email
      *
-     * @return  string
+     * @return  String
      */ 
     public function getEmail()
     {
@@ -137,25 +137,28 @@ class UserModel
     /**
      * Set the value of email
      *
-     * @param  string  $email
+     * @param  String  $email
      *
      * @return  self
      */ 
-    public function setEmail(string $email)
+    public function setEmail(String $email)
     {
-        if(strlen($email)<=50)
-            if(filter_var($email,FILTER_VALIDATE_EMAIL))
-                $this->email = $email;
+        if(!empty($email))
+            if(strlen($email)<=50)
+                if(filter_var($email,FILTER_VALIDATE_EMAIL))
+                    $this->email = $email;
+                else
+                    $this->setErrorMsg('[email] - não é válido');
             else
-                $this->setErrorMsg('O valor de email fornecido não é valido');
+                $this->setErrorMsg('[email] - ultrapassou o limite de 50 caracteres');
         else
-            $this->setErrorMsg('O email ultrapassou o limite de 50 caracteres');
+            $this->setErrorMsg('[email] - está vazio');
     }
 
     /**
      * Get the value of senha
      *
-     * @return  string
+     * @return  String
      */ 
     public function getSenha()
     {
@@ -165,16 +168,19 @@ class UserModel
     /**
      * Set the value of senha
      *
-     * @param  string  $senha
+     * @param  String  $senha
      *
      * @return  self
      */ 
-    public function setSenha(string $senha)
+    public function setSenha(String $senha)
     {
-        if(strlen($senha)<=50)
-            $this->senha = $senha;
+        if(!empty($senha))
+            if(strlen($senha)<=50)
+                $this->senha = $senha;
+            else
+                $this->setErrorMsg('[senha] - ultrapassou o limite de 50 caracteres');
         else
-            $this->setErrorMsg('A senha ultrapassou o limite de 50 caracteres');
+            $this->setErrorMsg('[senha] - está vazia');
 
         return $this;
     }
@@ -182,7 +188,7 @@ class UserModel
     /**
      * Get the value of tipo
      *
-     * @return  string
+     * @return  String
      */ 
     public function getTipo()
     {
@@ -192,17 +198,20 @@ class UserModel
     /**
      * Set the value of tipo
      *
-     * @param  string  $tipo
+     * @param  String  $tipo
      *
      * @return  self
      */ 
-    public function setTipo(string $tipo ='COMUM')
+    public function setTipo(String $tipo ='COMUM')
     {
         $validos =array('GESTOR','BANDA','COMUM');
-        if(in_array($tipo,$validos))
-            $this->tipo = $tipo;
+        if(!empty($tipo))
+            if(in_array($tipo,$validos))
+                $this->tipo = $tipo;
+            else
+                $this->setErrorMsg('[tipo] - não está contido em ['.implode(' ,',$validos).']');
         else
-            $this->setErrorMsg('O valor fornecido para o tipo não está contido em ['.implode(' ,',$validos).']');
+            $this->setErrorMsg('[tipo] - está vazio');
 
         return $this;
     }
@@ -210,7 +219,7 @@ class UserModel
     /**
      * Get the value of status
      *
-     * @return  string
+     * @return  String
      */ 
     public function getStatus()
     {
@@ -220,17 +229,21 @@ class UserModel
     /**
      * Set the value of status
      *
-     * @param  string  $status
+     * @param  String  $status
      *
      * @return  self
      */ 
-    public function setStatus(string $status)
+    public function setStatus(String $status)
     {
         $validos =array('ATIVO','INATIVO');
-        if(in_array($status,$validos))
-            $this->status = $status;
+        if(!empty($status))
+            if(in_array($status,$validos))
+                $this->status = $status;
+            else
+                $this->setErrorMsg('[status] - não está contido em ['.implode(' ,',$validos).']');
         else
-            $this->setErrorMsg('O valor fornecido para o status não está contido em ['.implode(' ,',$validos).']');
+            $this->setErrorMsg('[status] - está vazio');
+
 
         return $this;
     }
@@ -238,7 +251,7 @@ class UserModel
     /**
      * Get the value of permissao
      *
-     * @return  string
+     * @return  String
      */ 
     public function getPermissao()
     {
@@ -248,13 +261,16 @@ class UserModel
     /**
      * Set the value of permissao
      *
-     * @param  string  $permissao
+     * @param  String  $permissao
      *
      * @return  self
      */ 
-    public function setPermissao(string $permissao)
+    public function setPermissao(String $permissao)
     {
-        $this->permissao = $permissao;
+        if(!empty($permissao))
+            $this->permissao = $permissao;
+        else
+            $this->setErrorMsg('[permissao] - está vazia');
 
         return $this;
     }

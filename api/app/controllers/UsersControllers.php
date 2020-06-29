@@ -4,15 +4,15 @@ namespace Controllers;
 use Psr\Http\Message\{
     ResponseInterface as Response,
     ServerRequestInterface as Request };
-use Models\UserModel;
+use Models\Classes\UserClass;
 
-class UserControllers 
+class UsersControllers 
 {
     public function createUser (Request $request, Response $response, $args)
     {
         $body =$request->getParsedBody();
 
-        $User = new UserModel;
+        $User = new UserClass;
         $User->setNome($body['nome']);
         $User->setEmail($body['email']);
         $User->setSenha($body['senha']);
@@ -28,7 +28,7 @@ class UserControllers
 
     public function list(Request $request, Response $response, $args)
     {
-        $res =(new UserModel)->list();
+        $res =(new UserClass)->list();
     
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response
@@ -37,7 +37,7 @@ class UserControllers
 
     public function getUser (Request $request, Response $response, $args)
     {
-        $res =(new UserModel)->getUserInfo($args['id']);
+        $res =(new UserClass)->getUserInfo($args['id']);
     
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response
@@ -48,7 +48,7 @@ class UserControllers
     {
         $body =$request->getParsedBody();
         
-        $res =(new UserModel)->login($body['email'],$body['senha']);
+        $res =(new UserClass)->login($body['email'],$body['senha']);
     
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response
@@ -59,7 +59,7 @@ class UserControllers
     {
         $body =$request->getParsedBody();
 
-        $User = new UserModel;
+        $User = new UserClass;
         $User->setNome($body['nome']);
         $User->setEmail($body['email']);
         $User->setTipo($body['tipo']);
@@ -75,7 +75,7 @@ class UserControllers
     {
         $body =$request->getParsedBody();
 
-        $User = new UserModel;
+        $User = new UserClass;
         $User->setSenha($body['senha']);
         $res =$User->updatePass($args['id']);
 
@@ -86,7 +86,7 @@ class UserControllers
 
     public function delete (Request $request, Response $response, $args)
     {
-        $res =(new UserModel)->delete($args['id']);
+        $res =(new UserClass)->delete($args['id']);
     
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response
@@ -95,7 +95,7 @@ class UserControllers
 
     public function teste (Request $request, Response $response, $args)
     {
-        $res =[getenv('DB_NAME'),getenv('DB_HOST'),getenv('DB_USER'),getenv('DB_PASS')];
+        $res =['message'=> BASE_DIR.ARCHIVES_DIR."avatar/"];
     
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response

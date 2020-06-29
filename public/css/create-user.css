@@ -1,0 +1,42 @@
+.bg-create-user {
+    width: 100% !important;
+    height: 100vh;
+    background: var(--color-sec);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#img-create {
+    height: 100%;
+    margin: 0;
+}
+
+#img-create > img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.input-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -.5px inset var(--color-ter);
+}
+
+.input-line input {
+    background: rgba(0, 0, 0, 0);
+    color: var(--color-text);
+    outline: none; 
+    border: none; 
+    font-size: large;
+}
+
+.input-line input:focus {
+    background: rgba(0, 0, 0, 0);
+    color: var(--color-text);
+    outline: none;
+    border: none;  
+}
+

@@ -110,6 +110,8 @@ class ComposerStaticInitf539becccfb58eb1c108c5d770f14981
     );
 
     public static $classMap = array (
+        'Controllers\\Controller' => __DIR__ . '/../..' . '/app/controllers/Controller.php',
+        'Controllers\\HomeController' => __DIR__ . '/../..' . '/app/controllers/HomeController.php',
         'Dotenv\\Dotenv' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Dotenv.php',
         'Dotenv\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ExceptionInterface.php',
         'Dotenv\\Exception\\InvalidEncodingException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/InvalidEncodingException.php',

@@ -61,7 +61,8 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
         ),
         'M' => 
         array (
-            'Models\\' => 7,
+            'Models\\Dao\\' => 11,
+            'Models\\Classes\\' => 15,
         ),
         'L' => 
         array (
@@ -86,7 +87,6 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
         'D' => 
         array (
             'Dotenv\\' => 7,
-            'Dao\\' => 4,
             'DB\\' => 3,
         ),
         'C' => 
@@ -152,9 +152,13 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
         array (
             0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
         ),
-        'Models\\' => 
+        'Models\\Dao\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app/models',
+            0 => __DIR__ . '/../..' . '/app/models/dao',
+        ),
+        'Models\\Classes\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/models/classes',
         ),
         'Libs\\' => 
         array (
@@ -192,10 +196,6 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'Dao\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app/models/dao',
-        ),
         'DB\\' => 
         array (
             0 => __DIR__ . '/../..' . '/database',
@@ -213,7 +213,6 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
     public static $classMap = array (
         'Controllers\\UserControllers' => __DIR__ . '/../..' . '/app/controllers/UserControllers.php',
         'DB\\DB' => __DIR__ . '/../..' . '/database/DB.php',
-        'Dao\\UserDao' => __DIR__ . '/../..' . '/app/models/dao/UserDao.php',
         'Dotenv\\Dotenv' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Dotenv.php',
         'Dotenv\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ExceptionInterface.php',
         'Dotenv\\Exception\\InvalidFileException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/InvalidFileException.php',
@@ -347,7 +346,6 @@ class ComposerStaticInit7b56a12f046845a26089d7abfd626ee7
         'Laminas\\ZendFrameworkBridge\\Module' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Module.php',
         'Laminas\\ZendFrameworkBridge\\Replacements' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Replacements.php',
         'Laminas\\ZendFrameworkBridge\\RewriteRules' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/RewriteRules.php',
-        'Models\\UserModel' => __DIR__ . '/../..' . '/app/models/UserModel.php',
         'Nyholm\\Psr7Server\\ServerRequestCreator' => __DIR__ . '/..' . '/nyholm/psr7-server/src/ServerRequestCreator.php',
         'Nyholm\\Psr7Server\\ServerRequestCreatorInterface' => __DIR__ . '/..' . '/nyholm/psr7-server/src/ServerRequestCreatorInterface.php',
         'Nyholm\\Psr7\\Factory\\HttplugFactory' => __DIR__ . '/..' . '/nyholm/psr7/src/Factory/HttplugFactory.php',

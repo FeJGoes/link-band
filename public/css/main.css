@@ -1,0 +1,7 @@
+.wallpaper > figure > img {
+    height: 380px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+}
+

@@ -1,11 +1,11 @@
 <?php
-namespace Dao;
+namespace Models\Dao;
 
 use DB\DB;
 use PDO;
 use Services\Log;
 
-class EventDao
+class EventsDao
 {
     /**
      * cria novo evento
@@ -14,8 +14,8 @@ class EventDao
      * @param String $descricao
      * @param String $data YYYY-MM-dd
      * @param String $hora H:i:s
-     * @param String $lat
-     * @param String $long
+     * @param String $latitude
+     * @param String $longitude
      * @param String $telefone (XX) XXXXX-XXXX
      * @param String $celular (XX) XXXXX-XXXX
      * @param String $cep XX.XXX-XXX
@@ -28,18 +28,18 @@ class EventDao
      * @param String $urlImg 
      * @return Boolean
      */
-    public static function create(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $lat, String $long, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) :Bool
+    public static function create(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $latitude, String $longitude, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) 
     {
         $pdo   = DB::linkeband();
-        $query = "INSERT INTO eventos (responsavel, titulo, descricao, data, hora, lat, long, telefone, celular, cep, logradouro, numero, bairro, complemento, cidade, estado, url_img) VALUES (:responsavel, :titulo, :descricao, :data, :hora, :lat, :long, :telefone, :celular, :cep, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :url_img)";
+        $query = "INSERT INTO eventos (responsavel, titulo, descricao, data, hora, latitude, longitude, telefone, celular, cep, logradouro, numero, bairro, complemento, cidade, estado, url_img) VALUES (:responsavel, :titulo, :descricao, :data, :hora, :latitude, :longitude, :telefone, :celular, :cep, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :url_img)";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':responsavel' ,$responsavel);
         $stmt->bindParam(':titulo'      ,$titulo);       
         $stmt->bindParam(':descricao'   ,$descricao);       
         $stmt->bindParam(':data'        ,$data);
         $stmt->bindParam(':hora'        ,$hora);
-        $stmt->bindParam(':lat'         ,$lat);
-        $stmt->bindParam(':long'        ,$long);
+        $stmt->bindParam(':latitude'    ,$latitude);
+        $stmt->bindParam(':longitude'   ,$longitude);
         $stmt->bindParam(':telefone'    ,$telefone);
         $stmt->bindParam(':celular'     ,$celular);
         $stmt->bindParam(':cep'         ,$cep);
@@ -74,7 +74,7 @@ class EventDao
 
     /**
      * retorna um evento em específico
-     * @param Int $responsavel id do responsável
+     * @param Int $id id do evento
      * @return Array
      */
     public static function getEventById (int $id) :array
@@ -135,8 +135,8 @@ class EventDao
      * @param String $descricao
      * @param String $data YYYY-MM-dd
      * @param String $hora H:i:s
-     * @param String $lat
-     * @param String $long
+     * @param String $latitude
+     * @param String $longitude
      * @param String $telefone (XX) XXXXX-XXXX
      * @param String $celular (XX) XXXXX-XXXX
      * @param String $cep XX.XXX-XXX
@@ -150,18 +150,18 @@ class EventDao
      * @param String $urlImg 
      * @return Boolean
      */
-    public static function update(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $lat, String $long, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) :bool
+    public static function update(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $latitude, String $longitude, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) :bool
     {
-        $pdo   = DB::linkeband();
-        $query = "UPDATE eventos SET responsavel=:responsavel, titulo=:titulo, descricao=:descricao, data=:data, hora=:hora, lat=:lat, long=:long, telefone=:telefone, celular=:celular, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, url_img=:url_img WHERE id =:id";
+        $pdo   =DB::linkeband();
+        $query ="UPDATE eventos SET responsavel=:responsavel, titulo=:titulo, descricao=:descricao, data=:data, hora=:hora, latitude=:latitude, longitude=:longitude, telefone=:telefone, celular=:celular, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, url_img=:url_img WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':responsavel' ,$responsavel);
         $stmt->bindParam(':titulo'      ,$titulo);       
         $stmt->bindParam(':descricao'   ,$descricao);       
         $stmt->bindParam(':data'        ,$data);
         $stmt->bindParam(':hora'        ,$hora);
-        $stmt->bindParam(':lat'         ,$lat);
-        $stmt->bindParam(':long'        ,$long);
+        $stmt->bindParam(':latitude'    ,$latitude);
+        $stmt->bindParam(':longitude'   ,$longitude);
         $stmt->bindParam(':telefone'    ,$telefone);
         $stmt->bindParam(':celular'     ,$celular);
         $stmt->bindParam(':cep'         ,$cep);
@@ -231,8 +231,8 @@ class EventDao
     /**
      * atualiza dados do eventos
      * @param Int    $id
-     * @param String $lat
-     * @param String $long
+     * @param String $latitude
+     * @param String $longitude
      * @param String $cep XX.XXX-XXX
      * @param String $logradouro 
      * @param Int    $numero 
@@ -242,14 +242,14 @@ class EventDao
      * @param String $estado 
      * @return Boolean
      */
-    public static function updateAddress(Int $id, String $lat, String $long, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado) :bool
+    public static function updateAddress(Int $id, String $latitude, String $longitude, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado) :bool
     {
         $pdo   = DB::linkeband();
-        $query = "UPDATE eventos SET lat=:lat, long=:long, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado WHERE id =:id";
+        $query = "UPDATE eventos SET latitude=:latitude, longitude=:longitude, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id'          ,$id);
-        $stmt->bindParam(':lat'         ,$lat);
-        $stmt->bindParam(':long'        ,$long);
+        $stmt->bindParam(':latitude'    ,$latitude);
+        $stmt->bindParam(':longitude'   ,$longitude);
         $stmt->bindParam(':cep'         ,$cep);
         $stmt->bindParam(':logradouro'  ,$logradouro);
         $stmt->bindParam(':numero'      ,$numero);
