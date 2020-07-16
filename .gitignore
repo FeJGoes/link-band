@@ -1,3 +1,3 @@
 .env
 logs/PHP_errors.log
-vendor/
+/vendor
