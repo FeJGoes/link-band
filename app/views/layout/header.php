@@ -5,7 +5,7 @@
         </a>
 
         <div>
-            <h5 class="white-text">Link&Band</h5>
+            <h5 class="white-text lb-font">Link&Band</h5>
         </div>
     </div>
 

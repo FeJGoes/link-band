@@ -9,7 +9,7 @@
 
         <div class="uk-width-1-1 uk-margin">
             <div class="input-line">
-                <span uk-icon="icon: user" style="color: var(--color-text)"></span>
+                <span uk-icon="icon: mail" style="color: var(--color-text)"></span>
                 <input class="uk-input" id="email" type="text" placeholder="email" required>
             </div>
         </div>

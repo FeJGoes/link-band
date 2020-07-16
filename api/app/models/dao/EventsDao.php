@@ -105,7 +105,7 @@ class EventsDao
         $error = $stmt->errorInfo();
         empty($error) ?: Log::PDO($error[2]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

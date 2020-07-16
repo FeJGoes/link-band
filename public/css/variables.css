@@ -8,6 +8,32 @@
     --color-sec:#393e46;
     --color-ter:#7971ea;
     --color-text:#eeeeee;
+    --color-danger: #f0506e;
+}
+
+
+.lb-bg-primary {
+    background: var(--color-pri) !important;
+}
+
+.lb-bg-secondary {
+    background: var(--color-sec) !important;
+}
+
+.lb-bg-tertiary {
+    background: var(--color-ter) !important;
+}
+
+.lb-color-primary {
+    color: var(--color-pri) !important;
+}
+
+.lb-color-secondary {
+    color: var(--color-sec) !important;
+}
+
+.lb-color-tertiary {
+    color: var(--color-ter) !important;
 }
 
 .white-text {
@@ -41,4 +67,13 @@
 
 .lb-button-default:hover {
     background: rgba(0, 0, 0, 0.05);
+}
+
+.lb-button-danger {
+    background:var(--color-danger);
+    color: var(--color-sec) !important;
+}
+
+.lb-font {
+    font-family: 'Mosk';
 }

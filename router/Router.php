@@ -1,6 +1,5 @@
 <?php
 
-
 class Router 
 {
      public function __construct(string $path)
@@ -12,26 +11,27 @@ class Router
 
           $route['/login'] =array(
                'controller'=>'BandAreaController',
-               'action'    =>'pageSignIn'
+               'action'    =>'pageFormLogin'
           );
 
           $route['/new'] =array(
                'controller'=>'BandAreaController',
-               'action'    =>'pageCreate'
+               'action'    =>'pageFormRegUser'
+          );
+
+          $route['/events'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'pageFormRegEvent'
           );
 
           if (array_key_exists($path, $route)) 
                $this->run($route[$path]['controller'], $route[$path]['action']);
           else
-          {
-               require BASE_DIR.CONTROLLERS_DIR.'ErrorHandle.php';
-               'Controllers\\'.ErrorHandle::run404();
-          } 
+               Controllers\ErrorHandle::run404();
      }
 
      public function run (string $controller, string $action)
      {
-          require_once BASE_DIR.CONTROLLERS_DIR."$controller.php";
           call_user_func('Controllers\\'.$controller.'::'.$action);
      }
 }

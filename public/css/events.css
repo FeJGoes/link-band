@@ -1,0 +1,10 @@
+#side-menu {
+    width: 150px;
+    min-height: 100vh;
+}
+
+.lb-card-event {
+    min-width: 250px;
+    width: 300px;
+    margin: 25px 15px;
+}

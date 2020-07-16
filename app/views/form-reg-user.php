@@ -39,8 +39,8 @@
 
             <div class="uk-width-1-1">
                 <div class="input-line">
-                    <label class="uk-text-uppercase" for="csenha">Confirme a senha</label>
-                    <input class="uk-input" id="cpassword" type="password" maxlength="50" required>
+                    <label class="uk-text-uppercase" for="retype">Confirme a senha</label>
+                    <input class="uk-input" id="retype-pass" type="password" maxlength="50" required>
                 </div>
             </div>
     

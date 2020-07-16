@@ -16,5 +16,3 @@ define('VIEWS_DIR'      ,'app/views/');
 define('SERVICES_DIR'   ,'app/services/');
 define('DATABASE_DIR'   ,'database/');
 define('LIBS_DIR'       ,'libs/');
-
- 

@@ -1,4 +1,5 @@
 <?php
+namespace Controllers;
 
 use Controllers\Controller;
 
@@ -18,16 +19,16 @@ class ErrorHandle
          */
         // $Controller->setCss(['404.css']);
 
-         /**
+        /**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
         // $Controller->setJs([]);
 
-         /**
+        /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
         $Controller->setView(['404.php']);
-   
+
         $Controller->renderError($title);
     }
 }
