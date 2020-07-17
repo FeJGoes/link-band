@@ -28,7 +28,7 @@ class BandAreaController
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
-		$Controller->setView(['form-login.php']);
+		$Controller->setView(['area-usuario/login.php']);
 
 		/**
 		 * Dados a ser utilizados na view
@@ -64,7 +64,7 @@ class BandAreaController
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
-		$Controller->setView(['form-reg-user.php']);
+		$Controller->setView(['area-usuario/registro-usuario.php']);
 
 		/**
 		 * Dados a ser utilizados na view
@@ -100,7 +100,7 @@ class BandAreaController
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
-		$Controller->setView(['events.php']);
+		$Controller->setView(['area-usuario/events.php']);
 
 		/**
 		 * Dados a ser utilizados na view

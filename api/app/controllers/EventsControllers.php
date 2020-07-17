@@ -56,7 +56,7 @@ class EventsControllers
                 'message'=>'Houve algum problema com arquivo enviado. '.$uploadedFile['avatar']->getError()
             );
         
-     
+    
         $response->getBody()->write(json_encode($res, JSON_UNESCAPED_SLASHES,JSON_UNESCAPED_UNICODE));
         return $response
                         ->withHeader('Content-Type', 'application/json');  
