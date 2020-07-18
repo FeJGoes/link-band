@@ -72,19 +72,17 @@ class UserDao
      * @param String $senha
      * @return Bool
      */
-    public static function verifyLogin (String $email, String $senha) :bool
+    public static function verifyLogin (String $email, String $senha) 
     {
         $pdo   = DB::linkeband();
-        $query = "SELECT COUNT(*) as total FROM usuarios WHERE email =:email AND senha =:senha";
+        $query = "SELECT nome, email, status, tipo, permissao FROM usuarios WHERE email =:email AND senha =:senha";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->execute();
         $data =$stmt->fetch(PDO::FETCH_ASSOC); 
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
-        return  $data['total']>0 ? TRUE:FALSE;
+        return  $data;
     }
 
     /**

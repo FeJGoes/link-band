@@ -30,7 +30,7 @@
                 <small class="white-text">Esqueci a Senha</small>
             </a>
 
-            <a href="<?=HOST?>new">
+            <a href="<?=HOST?>usuarios/novo">
                 <small class="white-text a-text-decoration">Criar minha conta</small>
             </a>
         </div>

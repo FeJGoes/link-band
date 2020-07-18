@@ -359,7 +359,9 @@ class UserClass
         if($consulta!==FALSE)
             $response =array(
                 "status"  =>"ok",
-                "message" =>"Seja Bem Vindo!" );
+                "message" =>"Seja Bem Vindo!",
+                "data" => $consulta
+             );
         else
             $response =array(
                 "status" =>"error",

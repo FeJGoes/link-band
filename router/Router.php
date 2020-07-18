@@ -9,19 +9,35 @@ class Router
                'action'    =>'pageMain'
           );
 
-          $route['/login'] =array(
+          $route['/area-restrita/login'] =array(
                'controller'=>'BandAreaController',
-               'action'    =>'pageFormLogin'
+               'action'    =>'loginView'
           );
 
-          $route['/new'] =array(
+          $route['/area-restrita/handshake'] =array(
                'controller'=>'BandAreaController',
-               'action'    =>'pageFormRegUser'
+               'action'    =>'login'
+          );
+          
+          $route['/area-restrita/usuarios/{id}'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'show'
           );
 
-          $route['/events'] =array(
+          $route['/area-restrita/logout'] =array(
                'controller'=>'BandAreaController',
-               'action'    =>'pageFormRegEvent'
+               'action'    =>'logout'
+          );
+
+
+          $route['/usuarios/novo'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'createView'
+          );
+
+          $route['/area-restrita/home'] =array(
+               'controller'=>'BandAreaController',
+               'action'    =>'home'
           );
 
           if (array_key_exists($path, $route)) 

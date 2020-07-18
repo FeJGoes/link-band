@@ -3,10 +3,12 @@
 namespace Controllers;
 
 use Controllers\Controller;
+use GuzzleHttp\Client;
+use Laminas\Diactoros\Response\JsonResponse;
 
 class BandAreaController
 {
-    public static function pageFormLogin()
+    public static function loginView()
 	{
         $Controller = new Controller;
         
@@ -23,7 +25,7 @@ class BandAreaController
 		/**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
-        // $Controller->setJs(['']);
+        $Controller->setJs(['login.js']);
 
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
@@ -42,7 +44,7 @@ class BandAreaController
         $Controller->render($title,$param,FALSE,FALSE);	
 	}
 	
-    public static function pageFormRegUser()
+    public static function createView()
 	{
         $Controller = new Controller;
         
@@ -78,7 +80,7 @@ class BandAreaController
         $Controller->render($title,$param,FALSE,FALSE);	
 	}
 	
-    public static function pageFormRegEvent()
+    public static function home()
 	{
         $Controller = new Controller;
         
@@ -112,6 +114,41 @@ class BandAreaController
 		 * Renderizar a config
 		 */
         $Controller->render($title,$param,FALSE,FALSE);	
+    }
+    
+
+    public static function login()
+	{
+        $client = new Client;
+        $response = $client->request('POST', 'http://localhost/api/login',[
+            'multipart' => [
+                [
+                    'name'     => 'email',
+                    'contents' => $_POST['email']
+                ],
+                [
+                    'name'     => 'senha',
+                    'contents' => $_POST['senha']
+                ]
+            ]
+        ]);
+
+        if($response->getStatusCode() === 200)
+        {
+            $res = (json_decode($response->getBody(),true));
+            $_SESSION['nome']      = $res['data']['nome'];
+            $_SESSION['email']     = $res['data']['email'];
+            $_SESSION['status']    = $res['data']['status'];
+            $_SESSION['tipo']      = $res['data']['tipo'];
+            $_SESSION['permissao'] = $res['data']['permissao'];
+            echo ($response->getBody());
+        }
+	}
+
+    public static function logout()
+	{
+        session_destroy();
+        header('Location: '.HOST.'area-restrita/login');
 	}
 	
 }

@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="<?=HOST?>area-restrita/logout">
                     <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>
                     Sair
                 </a>
@@ -33,6 +33,9 @@
         </ul>
 
     </aside>
+    <?='<pre>'?>
+    <?=print_r($_SESSION)?>
+    <?='</pre>'?>
 
     <section class="uk-flex uk-flex-wrap uk-flex-center uk-panel uk-panel-scrollable uk-height-viewport">
 
