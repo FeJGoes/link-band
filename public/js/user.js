@@ -85,25 +85,3 @@ function getUser(form,id)
     }
 }
 
-function deleteUser(form,id)
-{
-    if(findEmpty(form) === false)
-    {
-        url  = location.origin+'/api/users/'+id
-    
-        fetch(url,{method:'DELETE'})
-            .then(res => res.json())
-            .then(res => 
-                {
-                    if (res.status == 'ok')
-                    {
-                        showNotification('Usuário apagado com sucesso!<br>... Estamos atualizando','success',5000,true)
-                    }
-                    else
-                    {
-                        showNotification(res.message,'warning',5000)
-                    }
-                })
-            .catch(err => console.log(err))
-    }
-}

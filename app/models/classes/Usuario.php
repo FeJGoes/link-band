@@ -1,6 +1,7 @@
 <?php
 namespace Models\Classes;
 
+use Models\Dao\UserDao;
 use Models\Dao\UsuarioDao;
 
 class Usuario
@@ -397,26 +398,60 @@ class Usuario
      * @param Int    $id
      * @param String $nome
      * @param String $email
+     * @param String $senha
+     * @return Array
+     */
+    public function updateBandUserWithPass(Int $id) :Array
+    {
+        if($this->getError()===FALSE)
+        {
+            $consulta =UsuarioDao::updateBandUserWithPass(
+                $id,
+                $this->getNome(),
+                $this->getEmail(),
+                $this->getSenha());
+            if($consulta===TRUE)
+                $response =array(
+                    "status"  =>"ok",
+                    "message" =>"Usuário atualizado com sucesso!",
+                    "data"    =>UsuarioDao::getUserInfo($id)
+                );
+            else
+                $response =array(
+                    "status" =>"error",
+                    "message"=>"Ops, houve algum erro ao atualizar o usuário, verifique os dados e tente novemente!");
+        }
+        else
+            $response =array(
+                "status" =>"error",
+                "message"=>$this->getErrorMsg());
+                
+        return $response;
+    }
+
+     /**
+     * Cria novo usuário
+     * @param Int    $id
+     * @param String $nome
+     * @param String $email
      * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
      * @param String $status 'ATIVO' || 'INATIVO'
      * @param Array $permissao 
      * @return Array
      */
-    public function updateUser(Int $id) :Array
+    public function updateBandUser(Int $id) :Array
     {
         if($this->getError()===FALSE)
         {
-            $consulta =UsuarioDao::updateUser(
+            $consulta =UsuarioDao::updateBandUser(
                 $id,
                 $this->getNome(),
-                $this->getEmail(),
-                $this->getTipo(),
-                $this->getStatus(),
-                $this->getPermissao());
+                $this->getEmail());
             if($consulta===TRUE)
                 $response =array(
                     "status"  =>"ok",
-                    "message" =>"Usuário atualizado com sucesso!" );
+                    "message" =>"Usuário atualizado com sucesso!",
+                    "data"    =>UsuarioDao::getUserInfo($id) );
             else
                 $response =array(
                     "status" =>"error",

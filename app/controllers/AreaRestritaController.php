@@ -176,7 +176,7 @@ class AreaRestritaController
 		/**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
-        $Controller->setJs(['event.js']);
+        $Controller->setJs(['user-data.js']);
 
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
@@ -212,6 +212,39 @@ class AreaRestritaController
             
             echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
         
+    }
+    
+    public static function destroy()
+	{
+        $usuario  =new \Models\Classes\Usuario;
+        $response =$usuario->delete($_POST['id']);
+
+        if($response['status']=='ok')
+            session_destroy();
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+    }
+    
+    public static function update()
+	{
+        $usuario  =new \Models\Classes\Usuario;
+        $usuario->setNome($_POST['nome']);
+        $usuario->setEmail($_POST['email']);
+        if(empty($_POST['senha']))
+            $response =$usuario->updateBandUser($_POST['id']);
+        else
+        {
+            $usuario->setSenha($_POST['senha']);
+            $response =$usuario->updateBandUserWithPass($_POST['id']);
+        }
+
+        if($response['status']=='ok')
+        {
+            $_SESSION['nome']      = $response['data']['nome'];
+            $_SESSION['email']     = $response['data']['email'];
+        }
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
 	}
 
     public static function logout()

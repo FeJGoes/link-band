@@ -71,7 +71,7 @@
 
 .lb-button-danger {
     background:var(--color-danger);
-    color: var(--color-sec) !important;
+    color: var(--color-text) !important;
 }
 
 .lb-font {

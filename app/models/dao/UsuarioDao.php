@@ -3,7 +3,6 @@ namespace Models\Dao;
 
 use DB\DB;
 use PDO;
-use Services\Log;
 
 class UsuarioDao
 {
@@ -27,7 +26,6 @@ class UsuarioDao
         $stmt->bindParam(':tipo', $tipo);
         $stmt->bindParam(':permissao', json_encode($permissao));
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -43,7 +41,6 @@ class UsuarioDao
         $stmt  = $pdo->prepare($query);
         $stmt->execute();
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -61,7 +58,6 @@ class UsuarioDao
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -100,7 +96,6 @@ class UsuarioDao
         $stmt->bindParam(':senha', $senha);
         $stmt->execute();
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -121,7 +116,6 @@ class UsuarioDao
         $stmt->execute();
         $data =$stmt->fetch(PDO::FETCH_ASSOC); 
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $data['total']>0 ? TRUE:FALSE;
     }
@@ -148,7 +142,46 @@ class UsuarioDao
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':permissao', json_encode($permissao));
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
+
+        return $stmt->execute();
+    }
+
+    /**
+     * atualiza dados do usuário
+     * @param Int $id
+     * @param String $nome
+     * @param String $email
+     * @param String $senha
+     * @return Boolean
+     */
+    public static function updateBandUserWithPass(Int $id, String $nome, String $email, String $senha) :bool
+    {
+        $pdo   = DB::linkeband();
+        $query = "UPDATE usuarios SET nome =:nome, email =:email, senha =:senha WHERE id =:id";
+        $stmt  = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
+
+        return $stmt->execute();
+    }
+
+    /**
+     * atualiza dados do usuário
+     * @param Int $id
+     * @param String $nome
+     * @param String $email
+     * @return Boolean
+     */
+    public static function updateBandUser(Int $id, String $nome, String $email) :bool
+    {
+        $pdo   = DB::linkeband();
+        $query = "UPDATE usuarios SET nome =:nome, email =:email WHERE id =:id";
+        $stmt  = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email', $email);
 
         return $stmt->execute();
     }
@@ -167,7 +200,6 @@ class UsuarioDao
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':id', $id);
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -184,7 +216,6 @@ class UsuarioDao
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }

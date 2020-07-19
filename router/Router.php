@@ -19,21 +19,20 @@ class Router
                'action'    =>'login'
           );
 
-          $route['/area-restrita/store'] =array(
+          $route['/area-restrita/usuarios/destroy'] =array(
                'controller'=>'AreaRestritaController',
-               'action'    =>'store'
+               'action'    =>'destroy'
           );
-          
-          $route['/area-restrita/usuarios/{id}'] =array(
+
+          $route['/area-restrita/usuarios/update'] =array(
                'controller'=>'AreaRestritaController',
-               'action'    =>'show'
+               'action'    =>'update'
           );
 
           $route['/area-restrita/logout'] =array(
                'controller'=>'AreaRestritaController',
                'action'    =>'logout'
           );
-
 
           $route['/usuarios/novo'] =array(
                'controller'=>'AreaRestritaController',
