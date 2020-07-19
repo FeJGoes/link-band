@@ -207,7 +207,6 @@ class AreaRestritaController
                 $_SESSION['email']     = $response['data']['email'];
                 $_SESSION['status']    = $response['data']['status'];
                 $_SESSION['tipo']      = $response['data']['tipo'];
-                $_SESSION['permissao'] = $response['data']['permissao'];
             }
             
             echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
@@ -245,12 +244,30 @@ class AreaRestritaController
         }
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+    }
+    
+    public static function storeUser()
+	{
+        $usuario  =new \Models\Classes\Usuario;
+        $usuario->setNome($_POST['nome']);
+        $usuario->setEmail($_POST['email']);
+        $usuario->setTipo('BANDA');
+        $usuario->setSenha($_POST['senha']);
+        $response =$usuario->create();
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
 	}
 
     public static function logout()
 	{
         session_destroy();
         header('Location: '.HOST.'area-restrita/login');
+	}
+
+    public static function showEmail()
+	{
+        $usuario  =new \Models\Classes\Usuario;
+        echo json_encode($usuario->emailExist($_GET['e']));
 	}
 	
 }

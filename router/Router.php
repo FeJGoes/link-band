@@ -34,9 +34,19 @@ class Router
                'action'    =>'logout'
           );
 
+          $route['/usuarios/email'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'showEmail'
+          );
+
           $route['/usuarios/novo'] =array(
                'controller'=>'AreaRestritaController',
                'action'    =>'createView'
+          );
+
+          $route['/usuarios/store'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'storeUser'
           );
 
           $route['/area-restrita/home'] =array(
@@ -53,8 +63,7 @@ class Router
                'controller'=>'AreaRestritaController',
                'action'    =>'editUserView'
           );
-
-          if (array_key_exists($path, $route)) 
+          if (array_key_exists($path, $route))
                $this->run($route[$path]['controller'], $route[$path]['action']);
           else
                Controllers\ErrorHandle::run404();

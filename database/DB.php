@@ -15,7 +15,7 @@ class DB
     public static function linkeband()
     {
         return new PDO(
-            "mysql:dbname=" . getenv('DB_NAME') . ";host=" . getenv('DB_HOST'),
+            "mysql:host=" . getenv('DB_HOST').";dbname=" . getenv('DB_NAME').";",
             getenv('DB_USER'),
             getenv('DB_PASS'),
             [

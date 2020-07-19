@@ -150,7 +150,7 @@ function findEmpty(parent)
  * @param {Number} time
  * @param {Boolean} reload 
  */
-function showNotification(message, type='primary', time=5000, reload=false)
+function showNotification(message, type='primary', time=5000)
 {
     UIkit.notification({
         message: message,
@@ -158,9 +158,4 @@ function showNotification(message, type='primary', time=5000, reload=false)
         pos: 'top-center',
         timeout: time
     });
-
-    if (reload===true) 
-    {
-        location.reload();
-    }
 }

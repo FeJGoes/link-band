@@ -1,7 +1,6 @@
 <?php
 namespace Models\Classes;
 
-use Models\Dao\UserDao;
 use Models\Dao\UsuarioDao;
 
 class Usuario
@@ -30,11 +29,6 @@ class Usuario
      * @var String  
      */
     private String $status;
-
-    /**
-     * @var String  
-     */
-    private String $permissao;
 
     /**
      * @var Bool  
@@ -146,10 +140,7 @@ class Usuario
     {
         if(!empty($email))
             if(strlen($email)<=50)
-                if(filter_var($email,FILTER_VALIDATE_EMAIL))
-                    $this->email = $email;
-                else
-                    $this->setErrorMsg('[email] - não é válido');
+                $this->email = $email;
             else
                 $this->setErrorMsg('[email] - ultrapassou o limite de 50 caracteres');
         else
@@ -249,40 +240,12 @@ class Usuario
         return $this;
     }
 
-    /**
-     * Get the value of permissao
-     *
-     * @return  String
-     */ 
-    public function getPermissao()
-    {
-        return $this->permissao;
-    }
-
-    /**
-     * Set the value of permissao
-     *
-     * @param  String  $permissao
-     *
-     * @return  self
-     */ 
-    public function setPermissao(String $permissao)
-    {
-        if(!empty($permissao))
-            $this->permissao = $permissao;
-        else
-            $this->setErrorMsg('[permissao] - está vazia');
-
-        return $this;
-    }
-
      /**
      * Cria novo usuário
      * @param String $nome
      * @param String $email
      * @param String $senha
      * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
-     * @param Array $permissao 
      * @return Array
      */
     public function create() :Array
@@ -293,8 +256,7 @@ class Usuario
                 $this->getNome(),
                 $this->getEmail(),
                 $this->getSenha(),
-                $this->getTipo(),
-                $this->getPermissao());
+                $this->getTipo());
             if($consulta===TRUE)
                 $response =array(
                     "status"  =>"ok",
@@ -375,21 +337,9 @@ class Usuario
      * Verifica se existe entre os usuários
      * @return Array
      */
-    public function emailExist(Int $id, String $email) :Array
+    public function emailExist(String $email) :bool
     {
-        $consulta =UsuarioDao::emailExist($id,$email);
-        if($consulta!==FALSE)
-            $response =array(
-                "status"  =>"ok",
-                "exist"   =>TRUE,
-                "message" =>"Email já cadastrado" );
-        else
-            $response =array(
-                "status" =>"error",
-                "exist"  =>FALSE,
-                "message"=>"Ops, nenhum dado encontrado!");
-                
-        return $response;
+        return UsuarioDao::emailExist($email);
     }
 
 
@@ -436,7 +386,6 @@ class Usuario
      * @param String $email
      * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
      * @param String $status 'ATIVO' || 'INATIVO'
-     * @param Array $permissao 
      * @return Array
      */
     public function updateBandUser(Int $id) :Array

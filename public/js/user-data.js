@@ -54,18 +54,15 @@ function editUser(form, btn, id, nome, email, senha='')
                 btn.innerText = 'Aguarde...'
                 if (res.status == 'ok')
                 {
-                    setTimeout(() =>
-                    {
+                    setTimeout(()=>{
                         btn.innerText = 'OK'
-                        console.log(res)
-                        showNotification(res.message, 'success', 1000, true)
-
-                        // setTimeout(() =>
-                        // {
-                        //     location.reload()
-
-                        // }, 3000)
-                    }, 1500)
+                        showNotification(res.message,'success',5000)
+                
+                        setTimeout(()=>{
+                            window.location.href = location.origin+'/area-restrita/home'
+                
+                        },1500)
+                    },1500)
                 }
                 else
                 {
@@ -97,7 +94,7 @@ function deleteUser(btn, id)
                 setTimeout(() =>
                 {
                     btn.innerText = 'OK'
-                    showNotification(res.message, 'success', 5000, true)
+                    showNotification(res.message, 'success', 5000)
                     UIkit.modal('#modal-delete-accont').hide()
 
                     setTimeout(() =>

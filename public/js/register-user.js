@@ -13,6 +13,7 @@ var btnCreate  =document.getElementById('btn-create')
 /******************************* EVENTOS **************************************/
 /******************************************************************************/
 showPass.onclick = () => showPassword(showPass, password, retypePass)
+email.onblur = () => emailFind(email)
 btnCreate.onclick = () => createUser(formCreate,btnCreate,nome.value,email.value,password.value,retypePass.value)
 
 /******************************************************************************/
@@ -32,19 +33,32 @@ function showPassword(checkbox, password, retype)
     }
 }
 
+function emailFind(email)
+{
+    url = location.origin + '/usuarios/email?e='+email.value
+    fetch(url)
+        .then(res => res.json())
+        .then(res =>
+        {
+            if (res===true)
+            {
+                showNotification('Email já cadastrado na base de dados', 'warning', 5000)
+                email.value = ''
+            }
+        })
+        .catch(err => console.log(err))
+}
 
 function createUser(form, btn, nome, email, senha, confirmacaoSenha)
 {
     if (senha === confirmacaoSenha) {
         if(findEmpty(form) === false)
         {
-            url  = location.origin+'/api/users'
+            url  = location.origin+'/usuarios/store'
             data = new FormData
             data.append('nome'  ,nome)
             data.append('email' ,email)
             data.append('senha' ,senha)
-            data.append('tipo' ,'BANDA')
-            data.append('permissao' ,'[1,2,3]')
         
             fetch(url,
                 { method: 'POST', body  : data })
@@ -56,7 +70,7 @@ function createUser(form, btn, nome, email, senha, confirmacaoSenha)
                         {
                             setTimeout(()=>{
                                 btn.innerText = 'OK'
-                                showNotification(res.message,'success',5000,true)
+                                showNotification(res.message,'success',5000)
                         
                                 setTimeout(()=>{
                                     window.location.href = location.origin+'/area-restrita/login'

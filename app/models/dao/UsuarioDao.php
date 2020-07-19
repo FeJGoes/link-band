@@ -12,19 +12,17 @@ class UsuarioDao
      * @param String $email
      * @param String $senha
      * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
-     * @param Array $permissao 
      * @return Boolean
      */
-    public static function create(String $nome, String $email, String $senha, String $tipo, string $permissao) :bool
+    public static function create(String $nome, String $email, String $senha, String $tipo) :bool
     {
         $pdo   = DB::linkeband();
-        $query = "INSERT INTO usuarios (nome, email, senha, tipo, permissao) VALUES (:nome, :email, :senha, :tipo, :permissao)";
+        $query = "INSERT INTO usuarios (nome, email, senha, tipo) VALUES (:nome, :email, :senha, :tipo)";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);       
         $stmt->bindParam(':senha', $senha);       
         $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':permissao', json_encode($permissao));
         $error = $stmt->errorInfo();
 
         return $stmt->execute();
@@ -53,7 +51,7 @@ class UsuarioDao
     public static function getUserInfo (int $id) :array
     {
         $pdo   = DB::linkeband();
-        $query = "SELECT id, nome, email, senha, tipo, permissao FROM usuarios WHERE id =:id";
+        $query = "SELECT id, nome, email, senha, tipo FROM usuarios WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -71,7 +69,7 @@ class UsuarioDao
     public static function verifyLogin (String $email, String $senha) 
     {
         $pdo   = DB::linkeband();
-        $query = "SELECT id, nome, email, status, tipo, permissao FROM usuarios WHERE email =:email AND senha =:senha";
+        $query = "SELECT id, nome, email, status, tipo FROM usuarios WHERE email =:email AND senha =:senha";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
@@ -102,20 +100,17 @@ class UsuarioDao
 
     /**
      * Verifica a email do usuário 
-     * @param Int $id
      * @param String $email
      * @return Boolean
      */
-    public static function emailExist(Int $id, String $email) :Bool
+    public static function emailExist(String $email) :Bool
     {
         $pdo   = DB::linkeband();
-        $query = "SELECT COUNT(*) as total FROM usuarios WHERE id =:id AND email =:email";
+        $query = "SELECT COUNT(*) as total FROM usuarios WHERE email =:email";
         $stmt  = $pdo->prepare($query);
-        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $data =$stmt->fetch(PDO::FETCH_ASSOC); 
-        $error = $stmt->errorInfo();
 
         return $data['total']>0 ? TRUE:FALSE;
     }
@@ -127,20 +122,18 @@ class UsuarioDao
      * @param String $email
      * @param String $senha
      * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
-     * @param String $permissao 
      * @return Boolean
      */
-    public static function updateUser(Int $id, String $nome, String $email, String $tipo, String $status, String $permissao) :bool
+    public static function updateUser(Int $id, String $nome, String $email, String $tipo, String $status) :bool
     {
         $pdo   = DB::linkeband();
-        $query = "UPDATE usuarios SET nome =:nome, email =:email, tipo =:tipo, status =:status, permissao =:permissao WHERE id =:id";
+        $query = "UPDATE usuarios SET nome =:nome, email =:email, tipo =:tipo, status =:status WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':tipo', $tipo);
         $stmt->bindParam(':status', $status);
-        $stmt->bindParam(':permissao', json_encode($permissao));
         $error = $stmt->errorInfo();
 
         return $stmt->execute();

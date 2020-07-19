@@ -13,9 +13,11 @@ if (session_status()!==PHP_SESSION_ACTIVE)
 // Carrega as variáveis ambiente do arquivo .ENV
 (Dotenv\Dotenv::createImmutable(__DIR__))->load();
 
-new Router($_SERVER['REQUEST_URI']);
+new Router(
+    // ajuste para query params na Url
+    !empty($_GET) ? strstr($_SERVER['REQUEST_URI'],'?',true) : $_SERVER['REQUEST_URI']
+);
 
 // echo "<pre>";
 // print_r($_SERVER);
 // echo "</pre>";
-

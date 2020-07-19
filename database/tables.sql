@@ -1,11 +1,10 @@
 CREATE TABLE usuarios (
     `id` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(50) NOT NULL,
-    `email` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(50) NOT NULL UNIQUE,
     `senha` VARCHAR(50) NOT NULL,
-    `tipo` SET('GESTOR','BANDA','COMUM') NOT NULL DEFAULT 'COMUM',
+    `tipo` SET('BANDA','COMUM') NOT NULL DEFAULT 'COMUM',
     `status` SET('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
-    `permissao` JSON DEFAULT NULL,
     `url_img` VARCHAR(250) DEFAULT NULL,
     `criado_em` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
@@ -35,15 +34,15 @@ CREATE TABLE eventos (
     `criado_em` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `ultima_mod` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`responsavel`) REFERENCES `usuarios`(`id`)
-)ENGINE=innoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci44
+    FOREIGN KEY (`responsavel`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE
+)ENGINE=innoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
 CREATE TABLE usuarios_has_eventos (
     `id` INT NOT NULL AUTO_INCREMENT,
     `usuario_id` INT NOT NULL,
     `evento_id` INT NOT NULL,
-
-    FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`),
-    FOREIGN KEY (`evento_id`) REFERENCES `eventos`(`id`)
-)ENGINE=innoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci44
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`evento_id`) REFERENCES `eventos`(`id`) ON DELETE CASCADE
+)ENGINE=innoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
