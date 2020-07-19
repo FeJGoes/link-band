@@ -5,7 +5,7 @@
         </a>
 
         <div>
-            <h5 class="white-text lb-font">Link&Band</h5>
+            <h5 class="lb-color-text lb-font">Link&Band</h5>
         </div>
     </div>
 
@@ -14,7 +14,7 @@
             <li><a href="" class="nav-item active">início</a></li>
             <li><a href="" class="nav-item">sobre</a></li>
             <li><a href="" class="nav-item">nosso time</a></li>
-            <li><a href="<?=HOST?>login" class="nav-item">entrar</a></li>
+            <li><a href="<?=HOST?>area-restrita/login" class="nav-item">entrar</a></li>
         </ul>
     </nav>
 </header>
