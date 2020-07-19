@@ -3,8 +3,6 @@
 namespace Controllers;
 
 use Controllers\Controller;
-use GuzzleHttp\Client;
-use Laminas\Diactoros\Response\JsonResponse;
 use Middlewares\RestritedAreaGuard;
 
 class AreaRestritaController
@@ -199,34 +197,21 @@ class AreaRestritaController
     
     public static function login()
 	{
-        $client = new Client;
-        $response = $client->request('POST', 'http://localhost/api/login',[
-            'multipart' => [
-                [
-                    'name'     => 'email',
-                    'contents' => $_POST['email']
-                ],
-                [
-                    'name'     => 'senha',
-                    'contents' => $_POST['senha']
-                ]
-            ]
-        ]);
+        $usuario  =new \Models\Classes\Usuario;
+        $response =$usuario->login($_POST['email'],$_POST['senha']);
 
-        if($response->getStatusCode() === 200)
-        {
-            $res = (json_decode($response->getBody(),true));
-            if($res['status']=='ok')
+            if($response['status']=='ok')
             {
-                $_SESSION['nome']      = $res['data']['nome'];
-                $_SESSION['email']     = $res['data']['email'];
-                $_SESSION['status']    = $res['data']['status'];
-                $_SESSION['tipo']      = $res['data']['tipo'];
-                $_SESSION['permissao'] = $res['data']['permissao'];
+                $_SESSION['id']        = $response['data']['id'];
+                $_SESSION['nome']      = $response['data']['nome'];
+                $_SESSION['email']     = $response['data']['email'];
+                $_SESSION['status']    = $response['data']['status'];
+                $_SESSION['tipo']      = $response['data']['tipo'];
+                $_SESSION['permissao'] = $response['data']['permissao'];
             }
             
-            echo ($response->getBody());
-        }
+            echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+        
 	}
 
     public static function logout()

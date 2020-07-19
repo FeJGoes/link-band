@@ -1,19 +1,19 @@
 {
     "require": {
-        "vlucas/phpdotenv": "^5.0",
+        "vlucas/phpdotenv": "^4.1",
         "phpmailer/phpmailer": "^6.1",
         "guzzlehttp/guzzle": "^7.0"
     },
     "autoload": {
         "psr-4": {
-            "Controllers\\" : "app/controllers/",
-            "Middlewares\\" : "app/middlewares/",
-            "Models\\"      : "app/models/",
-            "Dao\\"         : "app/models/dao",
+            "Controllers\\"     : "app/controllers/",
+            "Middlewares\\"     : "app/middlewares/",
+            "Models\\Classes\\" : "app/models/classes",
+            "Models\\Dao\\"     : "app/models/dao",
             "Services\\"    : "app/services/",
             "Configs\\"     : "configs/",
             "Router\\"      : "router/", 
-            "Database\\"    : "database/"
+            "DB\\"    : "database/"
         }
     }
 }
