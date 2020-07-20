@@ -17,7 +17,7 @@
                     </h5>
                     <p class="descricao"><?=$event['descricao']?></p>
                     <div class="uk-margin-auto uk-flex uk-flex-center uk-width-1-1">
-                        <a href="<?=HOST.'area-restrita/evento/edit?e='.$event['id']?>" class="uk-margin-left lb-button lb-button-primary uk-width-1-3 uk-flex uk-flex-center uk-flex-middle" uk-tooltip="title: editar; pos: bottom">
+                        <a href="<?=HOST.'area-restrita/eventos/edit?e='.$event['id']?>" class="uk-margin-left lb-button lb-button-primary uk-width-1-3 uk-flex uk-flex-center uk-flex-middle" uk-tooltip="title: editar; pos: bottom">
                             <span class="lb-color-text" uk-icon="settings"></span>
                         </a>
                         <span onclick="detroyModal(<?=$event['id']?>)" class="uk-margin-left lb-button lb-button-danger uk-width-1-3 uk-flex uk-flex-center uk-flex-middle" uk-tooltip="title: apagar; pos: bottom">
