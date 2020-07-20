@@ -159,3 +159,26 @@ function showNotification(message, type='primary', time=5000)
         timeout: time
     });
 }
+
+/**
+ * 
+ * Função para aplicar mascara de número de telefone
+ * 
+ * @param {String} fone 
+ * @returns {String} 
+ */
+function phoneMask(fone) 
+{
+    if (fone.length <= 15)
+    {
+        fone = fone.replace(/\D/g, ""); //Remove tudo o que não é dígito
+        fone = fone.replace(/^(\d{2})(\d)/g, "($1) $2") //Coloca parênteses em volta dos dois primeiros dígitos
+        fone = fone.replace(/(\d)(\d{4})$/, "$1-$2") //Coloca hífen entre o quarto e o quinto dígitos
+        return fone
+    }
+    else
+    {
+        fone = fone.slice(0,15) //Coloca hífen entre o quarto e o quinto dígitos
+        return fone
+    }
+}

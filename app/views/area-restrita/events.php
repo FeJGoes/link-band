@@ -135,4 +135,3 @@
 
     </section>
 </main>
-<?php require_once 'modal-create-event.php'?>

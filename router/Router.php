@@ -59,6 +59,11 @@ class Router
                'action'    =>'eventsView'
           );
 
+          $route['/area-restrita/eventos/novo'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'eventStore'
+          );
+
           $route['/area-restrita/meus-dados'] =array(
                'controller'=>'AreaRestritaController',
                'action'    =>'editUserView'

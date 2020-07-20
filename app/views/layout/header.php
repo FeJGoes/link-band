@@ -1,20 +1,17 @@
-<header id="main-header">
-    <div id="nav-logo" class="uk-flex uk-flex-around">
-        <a href="<?=HOST?>">
-            <img id="logo" src="<?=HOST.IMGS_DIR?>logo/logo-linkeband-palheta.png" width="80">
-        </a>
+<header uk-sticky id="main-header">
+        <figure id="nav-logo">
+            <a href="<?=HOST?>">
+                <img id="logo" src="public/images/logo/logo-linkeband-branco.png" alt="logo_moveis&cia">
+            </a>
+        </figure>
 
-        <div>
-            <h5 class="lb-color-text lb-font">Link&Band</h5>
-        </div>
-    </div>
-
-    <nav id="nav-header">
-        <ul>
-            <li><a href="" class="nav-item active">início</a></li>
-            <li><a href="" class="nav-item">sobre</a></li>
-            <li><a href="" class="nav-item">nosso time</a></li>
-            <li><a href="<?=HOST?>area-restrita/login" class="nav-item">entrar</a></li>
-        </ul>
-    </nav>
-</header>
+        <nav id="nav-header">
+            <ul>
+                <li><a href="<?=HOST?>" class="nav-item active">início</a></li>
+                <li><a href="#sobre" class="nav-item">sobre</a></li>
+                <li><a href="#contato" class="nav-item">contato</a></li>
+                <li><a href="#desenvolvedores" class="nav-item ">equipe</a></li>
+                <li><a href="<?=HOST?>area-restrita/login" class="nav-item ">entrar</a></li>
+            </ul>
+        </nav>
+    </header>

@@ -22,9 +22,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 -.5px inset var(--color-ter);
+    margin-top: 5px;
+    box-shadow: 0 .5px var(--color-ter);
 }
 
+.input-line textarea,
+.input-line select,
 .input-line input {
     background: rgba(0, 0, 0, 0);
     color: var(--color-text);

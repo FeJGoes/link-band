@@ -3,6 +3,10 @@
     src:  url('../fonts/Mosk-Normal-400.ttf') format('truetype');
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --color-pri:#222831;
     --color-sec:#393e46;

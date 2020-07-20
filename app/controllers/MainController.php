@@ -23,7 +23,7 @@ class MainController
 		/**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
-        // $Controller->setJs(['']);
+        $Controller->setJs(['main.js']);
 
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição

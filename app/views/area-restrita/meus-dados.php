@@ -40,7 +40,6 @@
     </section>
 </main>
 
-<?php require_once 'modal-create-event.php'?>
 
 <div id="modal-delete-accont" uk-modal="escClose:false; bgClose:false">
     <div class="uk-modal-dialog">

@@ -36,7 +36,7 @@
             </a>
         </li>
         <li>
-            <a href="#form-cad-event" uk-toggle>
+            <a href="<?=HOST?>area-restrita/eventos/novo">
                 <span class="uk-margin-small-right" uk-icon="icon: star"></span>
                 Criar Evento
             </a>

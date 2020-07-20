@@ -7,6 +7,11 @@ use Middlewares\RestritedAreaGuard;
 
 class AreaRestritaController
 {
+
+    /**************************************************************************/
+    /**************************************************************************/
+    /**************************************************************************/
+
     public static function loginView()
 	{
         RestritedAreaGuard::verify();
@@ -144,6 +149,44 @@ class AreaRestritaController
          * @method array setView() Acrescenta os arquivos de views nesta requisição
          */
 		$Controller->setView(['area-restrita/events.php']);
+
+		/**
+		 * Dados a ser utilizados na view
+		 */
+        
+		$param ='';
+
+		/**
+		 * Renderizar a config
+		 */
+        $Controller->render($title,$param,FALSE,FALSE);	
+    }
+
+    public static function eventStore()
+	{
+        RestritedAreaGuard::verify();
+
+        $Controller = new Controller;
+        
+        /**
+         * @var $title innerText da TAG <title>
+         */
+        $title ='Cadastrar Evento - Link&Band';
+
+        /**
+         * @method array setCss() Acrescenta os arquivos css nesta requisição
+         */
+        $Controller->setCss(['form.css','area-restrita.css']);
+
+		/**
+         * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
+         */
+        $Controller->setJs(['event.js']);
+
+        /**
+         * @method array setView() Acrescenta os arquivos de views nesta requisição
+         */
+		$Controller->setView(['area-restrita/form-create-event.php']);
 
 		/**
 		 * Dados a ser utilizados na view
