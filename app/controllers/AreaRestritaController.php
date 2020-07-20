@@ -346,6 +346,17 @@ class AreaRestritaController
         $usuario->setTipo('BANDA');
         $usuario->setSenha($_POST['senha']);
         $response =$usuario->create();
+        if($response['status']=='ok')
+        {
+            $mailer =new \Services\Mailer;
+            $mailer->setSender('noreply@linkeband.com','link&band');
+            $mailer->setReceiver($_POST['email'],$_POST['nome']);
+            $mailer->setContent('Bem Vindo ao Link&Band',
+            '<h1>Seja Bem Vindo(a)!, '.$_POST['nome'].'<h1><br>
+            Agora você já pode acessar nossa plataforma',
+            'Seja Bem Vindo!');
+            $mailer->send();
+        }
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
 	}
