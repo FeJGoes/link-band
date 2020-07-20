@@ -15,8 +15,8 @@ class Mailer
 
     public function __construct()
     {
-        $this->mailer = new PHPMailer(true);
-        $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+        $this->mailer = new PHPMailer();
+        // $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
         $this->mailer->isSMTP();                                            // Send using SMTP
         $this->mailer->Host       = getenv('SMTP_HOST');                    // Set the SMTP server to send through
         $this->mailer->SMTPAuth   = true;                                   // Enable SMTP authentication

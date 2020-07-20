@@ -352,8 +352,9 @@ class AreaRestritaController
             $mailer->setSender('noreply@linkeband.com','link&band');
             $mailer->setReceiver($_POST['email'],$_POST['nome']);
             $mailer->setContent('Bem Vindo ao Link&Band',
-            '<h1>Seja Bem Vindo(a)!, '.$_POST['nome'].'<h1><br>
-            Agora você já pode acessar nossa plataforma',
+            '<h1>Seja Bem Vindo(a)!, '.$_POST['nome'].'</h1><br>
+            <p>Agora você já pode acessar nossa plataforma<p>
+            <p><a href="'.HOST.'">link&band</a><p>',
             'Seja Bem Vindo!');
             $mailer->send();
         }
