@@ -14,8 +14,6 @@ class EventoDao
      * @param String $descricao
      * @param String $data YYYY-MM-dd
      * @param String $hora H:i:s
-     * @param String $latitude
-     * @param String $longitude
      * @param String $telefone (XX) XXXXX-XXXX
      * @param String $celular (XX) XXXXX-XXXX
      * @param String $cep XX.XXX-XXX
@@ -28,18 +26,17 @@ class EventoDao
      * @param String $urlImg 
      * @return Boolean
      */
-    public static function create(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $latitude, String $longitude, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) 
+    public static function create(Int $responsavel, String $titulo, String $genero, String $descricao, String $data, string $hora, $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, $complemento, String $cidade, String $estado, String $urlImg) 
     {
         $pdo   = DB::linkeband();
-        $query = "INSERT INTO eventos (responsavel, titulo, descricao, data, hora, latitude, longitude, telefone, celular, cep, logradouro, numero, bairro, complemento, cidade, estado, url_img) VALUES (:responsavel, :titulo, :descricao, :data, :hora, :latitude, :longitude, :telefone, :celular, :cep, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :url_img)";
+        $query = "INSERT INTO eventos (responsavel, titulo, genero, descricao, data, hora, telefone, celular, cep, logradouro, numero, bairro, complemento, cidade, estado, url_img) VALUES (:responsavel, :titulo, :genero, :descricao, :data, :hora, :telefone, :celular, :cep, :logradouro, :numero, :bairro, :complemento, :cidade, :estado, :url_img)";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':responsavel' ,$responsavel);
         $stmt->bindParam(':titulo'      ,$titulo);       
+        $stmt->bindParam(':genero'      ,$genero);       
         $stmt->bindParam(':descricao'   ,$descricao);       
         $stmt->bindParam(':data'        ,$data);
         $stmt->bindParam(':hora'        ,$hora);
-        $stmt->bindParam(':latitude'    ,$latitude);
-        $stmt->bindParam(':longitude'   ,$longitude);
         $stmt->bindParam(':telefone'    ,$telefone);
         $stmt->bindParam(':celular'     ,$celular);
         $stmt->bindParam(':cep'         ,$cep);
@@ -50,8 +47,6 @@ class EventoDao
         $stmt->bindParam(':cidade'      ,$cidade);
         $stmt->bindParam(':estado'      ,$estado);
         $stmt->bindParam(':url_img'     ,$urlImg);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -66,8 +61,6 @@ class EventoDao
         $query = "SELECT * FROM eventos ORDER BY data DESC";
         $stmt  = $pdo->prepare($query);
         $stmt->execute();
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -77,15 +70,13 @@ class EventoDao
      * @param Int $id id do evento
      * @return Array
      */
-    public static function getEventById (int $id) :array
+    public static function getEventById (int $id)
     {
         $pdo   = DB::linkeband();
         $query = "SELECT * FROM eventos WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -102,8 +93,6 @@ class EventoDao
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':responsavel', $responsavel);
         $stmt->execute();
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -122,21 +111,18 @@ class EventoDao
         $stmt->bindParam(':data_inicial',!empty($dataInicial)?:date('Y-m-d'));
         $stmt->bindParam(':data_final',!empty($dataFinal)?:date('Y-m-d'));
         $stmt->execute();
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
      * atualiza dados do eventos
-     * @param Int    $responsavel
+     * @param Int    $id
      * @param String $titulo
+     * @param String $genero
      * @param String $descricao
      * @param String $data YYYY-MM-dd
      * @param String $hora H:i:s
-     * @param String $latitude
-     * @param String $longitude
      * @param String $telefone (XX) XXXXX-XXXX
      * @param String $celular (XX) XXXXX-XXXX
      * @param String $cep XX.XXX-XXX
@@ -147,21 +133,19 @@ class EventoDao
      * @param String $cidade 
      * @param String $estado 
      * @param String $status 
-     * @param String $urlImg 
      * @return Boolean
      */
-    public static function update(Int $responsavel, String $titulo, String $descricao, String $data, string $hora, String $latitude, String $longitude, String $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, String $complemento, String $cidade, String $estado, String $urlImg) :bool
+    public static function update($id,String $titulo, $genero, String $descricao, String $data, string $hora, $telefone, String $celular, String $cep, String $logradouro, Int $numero, String $bairro, $complemento, String $cidade, String $estado) :bool
     {
         $pdo   =DB::linkeband();
-        $query ="UPDATE eventos SET responsavel=:responsavel, titulo=:titulo, descricao=:descricao, data=:data, hora=:hora, latitude=:latitude, longitude=:longitude, telefone=:telefone, celular=:celular, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado, url_img=:url_img WHERE id =:id";
+        $query ="UPDATE eventos SET titulo=:titulo, genero=:genero, descricao=:descricao, data=:data, hora=:hora, telefone=:telefone, celular=:celular, cep=:cep, logradouro=:logradouro, numero=:numero, bairro=:bairro, complemento=:complemento, cidade=:cidade, estado=:estado WHERE id =:id";
         $stmt  = $pdo->prepare($query);
-        $stmt->bindParam(':responsavel' ,$responsavel);
+        $stmt->bindParam(':id'          ,$id);       
         $stmt->bindParam(':titulo'      ,$titulo);       
+        $stmt->bindParam(':genero'      ,$genero);       
         $stmt->bindParam(':descricao'   ,$descricao);       
         $stmt->bindParam(':data'        ,$data);
         $stmt->bindParam(':hora'        ,$hora);
-        $stmt->bindParam(':latitude'    ,$latitude);
-        $stmt->bindParam(':longitude'   ,$longitude);
         $stmt->bindParam(':telefone'    ,$telefone);
         $stmt->bindParam(':celular'     ,$celular);
         $stmt->bindParam(':cep'         ,$cep);
@@ -171,9 +155,6 @@ class EventoDao
         $stmt->bindParam(':complemento' ,$complemento);
         $stmt->bindParam(':cidade'      ,$cidade);
         $stmt->bindParam(':estado'      ,$estado);
-        $stmt->bindParam(':url_img'     ,$urlImg);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -203,8 +184,6 @@ class EventoDao
         $stmt->bindParam(':telefone'    ,$telefone);
         $stmt->bindParam(':celular'     ,$celular);
         $stmt->bindParam(':url_img'     ,$urlImg);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -222,8 +201,6 @@ class EventoDao
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id'          ,$id);
         $stmt->bindParam(':url_img'     ,$urlImg);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -257,8 +234,6 @@ class EventoDao
         $stmt->bindParam(':complemento' ,$complemento);
         $stmt->bindParam(':cidade'      ,$cidade);
         $stmt->bindParam(':estado'      ,$estado);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }
@@ -274,8 +249,6 @@ class EventoDao
         $query = "DELETE FROM eventos WHERE id =:id";
         $stmt  = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
-        $error = $stmt->errorInfo();
-        empty($error) ?: Log::PDO($error[2]);
 
         return $stmt->execute();
     }

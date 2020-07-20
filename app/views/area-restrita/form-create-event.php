@@ -142,7 +142,7 @@
                     <div class="uk-width-1-1 uk-margin">
                         <div class="input-line">
                             <label for="imgs" class="uk-form-label">Imagens</label>
-                            <input class="uk-input uk-form-small" id="imgs" name="imgs[]" type="file">
+                            <input class="uk-input uk-form-small lb-color-primary" id="banner" name="banner" type="file">
                         </div>
                     </div>
                 </div>

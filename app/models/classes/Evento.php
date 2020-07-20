@@ -35,7 +35,7 @@ class Evento
     /**
      * @var String  
      */
-    private string $lat;
+    private string $genero;
     
     /**
      * @var String  
@@ -43,9 +43,9 @@ class Evento
     private string $long;
     
     /**
-     * @var String  
+     * @var string|null
      */
-    private string $telefone;
+    private $telefone =NULL;
     
     /**
      * @var String  
@@ -73,9 +73,9 @@ class Evento
     private string $bairro;
     
     /**
-     * @var String  
+     * @var string|null  
      */
-    private string $complemento;
+    private $complemento =NULL;
     
     /**
      * @var String  
@@ -295,7 +295,7 @@ class Evento
     public function setHora(?String $hora)
     {
         if(!empty($hora))
-            if(DateTime::createFromFormat('H:i',$hora)!==FALSE)
+            if(DateTime::createFromFormat('H:i:s',$hora)!==FALSE || DateTime::createFromFormat('H:i',$hora)!==FALSE )
                 $this->hora = $hora;
             else
                 $this->setErrorMsg('[hora] - não corresponde ao formato HH:mm');
@@ -304,31 +304,29 @@ class Evento
     }
 
     /**
-     * Get the value of lat
+     * Get the value of genero
      *
      * @return  String
      */ 
-    public function getLat()
+    public function getGenero()
     {
-        return $this->lat;
+        return $this->genero;
     }
 
     /**
-     * Set the value of lat
+     * Set the value of genero
      *
-     * @param  String  $lat
+     * @param  String  $genero
      *
      * @return  self
      */ 
-    public function setLat($lat)
+    public function setGenero($genero)
     {
-        if(!empty($lat))
-            if(strlen($lat)<=50)
-                $this->lat = $lat;
+        if(isset($genero))
+            if(strlen($genero)<=50)
+                $this->genero = $genero;
             else
-                $this->setErrorMsg('[lat] - ultrapassou o limite de 50 caracteres');
-        else
-            $this->setErrorMsg('[lat] - está vazia');
+                $this->setErrorMsg('[genero] - ultrapassou o limite de 50 caracteres');
 
         return $this;
     }
@@ -382,13 +380,11 @@ class Evento
      */ 
     public function setTelefone(?String $telefone)
     {
-        if(!empty($telefone))
+        if(isset($telefone))
             if(Utils::isValidPhone($telefone)!==FALSE)
                 $this->telefone = $telefone;
             else
                 $this->setErrorMsg('[telefone] -  não corresponde ao formato (xx) xxxx-xxxx');
-        else
-            $this->setErrorMsg('[telefone] - está vazio');
 
         return $this;
     }
@@ -562,13 +558,11 @@ class Evento
      */ 
     public function setComplemento(?String $complemento)
     {
-        if(!empty($complemento))
+        if(isset($complemento))
             if(strlen($complemento)<=150)
                 $this->complemento = $complemento;
             else
                 $this->setErrorMsg('[complemento] - ultrapassou o limite de 150 caracteres');
-        else
-            $this->setErrorMsg('[complemento] - está vazio');
 
         return $this;
     }
@@ -753,12 +747,7 @@ class Evento
     
 
      /**
-     * Cria novo usuário
-     * @param String $nome
-     * @param String $email
-     * @param String $senha
-     * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
-     * @param Array $permissao 
+     * Cria novo evento
      * @return Array
      */
     public function create() :Array
@@ -768,11 +757,10 @@ class Evento
             $consulta =EventoDao::create(
                 $this->getResponsavel(),
                 $this->getTitulo(),
+                $this->getGenero(),
                 $this->getDescricao(),
                 $this->getData(),
                 $this->gethora(),
-                $this->getLat(),
-                $this->getLong(),
                 $this->getTelefone(),
                 $this->getCelular(),
                 $this->getCep(),
@@ -797,6 +785,68 @@ class Evento
             $response =array(
                 "status" =>"error",
                 "message"=>$this->getErrorMsg());
+                
+        return $response;
+    }
+
+
+     /**
+     * Cria novo evento
+     * @return Array
+     */
+    public function updateEvent($id) :Array
+    {
+        if($this->getError()===FALSE)
+        {
+            $consulta =EventoDao::update(
+                $id,
+                $this->getTitulo(),
+                $this->getGenero(),
+                $this->getDescricao(),
+                $this->getData(),
+                $this->gethora(),
+                $this->getTelefone(),
+                $this->getCelular(),
+                $this->getCep(),
+                $this->getLogradouro(),
+                $this->getNumero(),
+                $this->getBairro(),
+                $this->getComplemento(),
+                $this->getCidade(),
+                $this->getEstado()
+                );
+            if($consulta===TRUE)
+                $response =array(
+                    "status"  =>"ok",
+                    "message" =>"Evento atualizado com sucesso!" );
+            else
+                $response =array(
+                    "status" =>"error",
+                    "message"=>"Ops, houve algum erro ao atualizar o evento, verifique os dados e tente novemente!");
+        }
+        else
+            $response =array(
+                "status" =>"error",
+                "message"=>$this->getErrorMsg());
+                
+        return $response;
+    }
+
+     /**
+     * Lista todos os eventos
+     * @return Array
+     */
+    public function updateUrlImg($id) :Array
+    {
+        $consulta =EventoDao::updateUrlImgById($id,$this->getUrlImg());
+        if($consulta)
+            $response =array(
+                "status"  =>"ok",
+                "message" =>"Imagem do evento atualizada com sucesso!" );
+        else
+            $response =array(
+                "status" =>"error",
+                "message"=>"Ops, houve algum erro ao atualizar o evento, verifique os dados e tente novemente!");
                 
         return $response;
     }
@@ -839,44 +889,7 @@ class Evento
         return $response;
     }
 
-     /**
-     * Cria novo usuário
-     * @param Int    $id
-     * @param String $nome
-     * @param String $email
-     * @param String $tipo 'COMUM' || 'BANDA' || 'GESTOR'
-     * @param String $status 'ATIVO' || 'INATIVO'
-     * @param Array $permissao 
-     * @return Array
-     */
-    // public function updateUser(Int $id) :Array
-    // {
-    //     if($this->getError()===FALSE)
-    //     {
-    //         $consulta =EventoDao::update(
-    //             $id,
-    //             $this->getNome(),
-    //             $this->getEmail(),
-    //             $this->getTipo(),
-    //             $this->getStatus(),
-    //             $this->getPermissao());
-    //         if($consulta===TRUE)
-    //             $response =array(
-    //                 "status"  =>"ok",
-    //                 "message" =>"Usuário atualizado com sucesso!" );
-    //         else
-    //             $response =array(
-    //                 "status" =>"error",
-    //                 "message"=>"Ops, houve algum erro ao atualizar o usuário, verifique os dados e tente novemente!");
-    //     }
-    //     else
-    //         $response =array(
-    //             "status" =>"error",
-    //             "message"=>$this->getErrorMsg());
-                
-    //     return $response;
-    // }
-
+     
      /**
      * Apaga evento
      * @return Array

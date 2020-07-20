@@ -97,25 +97,25 @@
             </div>
         </div>
 
-        <div class="uk-width-1-3">
+        <div id="form-contato" class="uk-width-1-3">
             <div>
                 <label class="uk-form-label" for="nome">Nome</label>
-                <input class="uk-input" type="text" placeholder="nome">
+                <input class="uk-input" type="text" placeholder="nome" required>
             </div>
 
             <div>
                 <label class="uk-form-label" for="email">email</label>
-                <input class="uk-input" type="email" placeholder="email">
+                <input class="uk-input" type="email" placeholder="email" required>
             </div>
 
             <div>
                 <label class="uk-form-label" for="assunto">Assunto</label>
-                <input class="uk-input" type="text" placeholder="assunto">
+                <input class="uk-input" type="text" placeholder="assunto" required>
             </div>
 
             <div>
                 <label class="uk-form-label" for="mensagem">mensagem</label>
-                <textarea class="uk-textarea" name="" id="" cols="30" rows="5"></textarea>
+                <textarea class="uk-textarea" name="" id="" cols="30" rows="5" required></textarea>
             </div>
 
             <div class="uk-flex uk-flex-center uk-margin">

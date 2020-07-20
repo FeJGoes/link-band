@@ -50,7 +50,7 @@ class AreaRestritaController
         $Controller->render($title,$param,FALSE,FALSE);	
 	}
 	
-    public static function createView()
+    public static function createUserView()
 	{
         $Controller = new Controller;
         
@@ -153,8 +153,9 @@ class AreaRestritaController
 		/**
 		 * Dados a ser utilizados na view
 		 */
+        $evento    =new \Models\Classes\Evento;
         
-		$param ='';
+		$param =$evento->listByOwner($_SESSION['id']);
 
 		/**
 		 * Renderizar a config
@@ -162,7 +163,7 @@ class AreaRestritaController
         $Controller->render($title,$param,FALSE,FALSE);	
     }
 
-    public static function eventStore()
+    public static function createEventView()
 	{
         RestritedAreaGuard::verify();
 
@@ -181,7 +182,7 @@ class AreaRestritaController
 		/**
          * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
          */
-        $Controller->setJs(['event.js']);
+        $Controller->setJs(['event-create.js']);
 
         /**
          * @method array setView() Acrescenta os arquivos de views nesta requisição
@@ -194,6 +195,44 @@ class AreaRestritaController
         
 		$param ='';
 
+		/**
+		 * Renderizar a config
+		 */
+        $Controller->render($title,$param,FALSE,FALSE);	
+    }
+    public static function editEventView()
+	{
+        RestritedAreaGuard::verify();
+
+        $Controller = new Controller;
+        
+        /**
+         * @var $title innerText da TAG <title>
+         */
+        $title ='Editar Evento - Link&Band';
+
+        /**
+         * @method array setCss() Acrescenta os arquivos css nesta requisição
+         */
+        $Controller->setCss(['form.css','area-restrita.css']);
+
+		/**
+         * @method array setJs() Acrescenta os arquivos scripts Javascript nesta requisição
+         */
+        $Controller->setJs(['event-edit.js']);
+
+        /**
+         * @method array setView() Acrescenta os arquivos de views nesta requisição
+         */
+		$Controller->setView(['area-restrita/form-edit-event.php']);
+
+		/**
+		 * Dados a ser utilizados na view
+		 */
+        $evento    =new \Models\Classes\Evento;
+        
+        $param =$evento->getEventById($_GET['e']);
+        
 		/**
 		 * Renderizar a config
 		 */
@@ -266,6 +305,14 @@ class AreaRestritaController
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
     }
+
+    public static function destroyEvent()
+	{
+        $evento  =new \Models\Classes\Evento;
+        $response =$evento->delete($_POST['id']);
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+    }
     
     public static function update()
 	{
@@ -297,6 +344,135 @@ class AreaRestritaController
         $usuario->setTipo('BANDA');
         $usuario->setSenha($_POST['senha']);
         $response =$usuario->create();
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+	}
+    
+    public static function storeEvent()
+	{
+        $evento    =new \Models\Classes\Evento;
+
+        if(isset($_FILES['banner']))
+        {
+            if($_FILES['banner']['error']===UPLOAD_ERR_OK)
+            {
+                $filename  =$_FILES['banner']['name'];
+                $extension =pathinfo($filename, PATHINFO_EXTENSION);
+
+                if(in_array($extension,['png','jpg','jpeg']))
+                {
+                    $newFilename =$_SESSION['id'].'-'.date('YmdHis').'.'.$extension;
+
+                    if(move_uploaded_file($_FILES['banner']['tmp_name'], ARCHIVES_DIR."eventos/".$newFilename))
+                    {
+                        $evento->setUrlImg(ARCHIVES_DIR."eventos/$newFilename");
+                    }
+                    else
+                    {
+                        $evento->setUrlImg(ARCHIVES_DIR."eventos/default.png");
+                        $response =array(
+                            'status' =>'error',
+                            'message'=>'Houve algum problema para salvar o arquivo'
+                        );
+                    }
+                }
+                else
+                    $response =array(
+                        'status' =>'error',
+                        'message'=>'A extensão fornecida não corresponde à ['.implode(',',['png','jpg','jpeg']).']'
+                    );
+            }
+            else
+                $response =array(
+                    'status' =>'error',
+                    'message'=>'Houve algum problema com arquivo enviado. '
+                );
+        }
+        else
+        {
+            $evento->setUrlImg(ARCHIVES_DIR."eventos/default.png");
+        }
+        
+        $evento->setResponsavel($_SESSION['id']);
+        $evento->setTitulo($_POST['titulo']);
+        $evento->setGenero($_POST['genero']);
+        $evento->setDescricao($_POST['descricao']);
+        $evento->setData($_POST['data']);
+        $evento->setHora($_POST['hora']);
+        $evento->setTelefone($_POST['telefone'] ?: NULL);
+        $evento->setCelular($_POST['celular']);
+        $evento->setCep($_POST['cep']);
+        $evento->setLogradouro($_POST['logradouro']);
+        $evento->setNumero($_POST['numero']);
+        $evento->setBairro($_POST['bairro']);
+        $evento->setComplemento($_POST['complemento']  ?: NULL);
+        $evento->setCidade($_POST['cidade']);
+        $evento->setEstado($_POST['estado']);
+        if(empty($response))
+            $response =$evento->create();
+        
+        echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+	}
+    
+    public static function updateEvent()
+	{
+        $evento    =new \Models\Classes\Evento;
+        if(isset($_FILES['banner']))
+        {
+            if($_FILES['banner']['error']===UPLOAD_ERR_OK)
+            {
+                $filename  =$_FILES['banner']['name'];
+                $extension =pathinfo($filename, PATHINFO_EXTENSION);
+
+                if(in_array($extension,['png','jpg','jpeg']))
+                {
+                    $newFilename =$_SESSION['id'].'-'.date('YmdHis').'.'.$extension;
+                    unlink($_POST['old_banner']);
+
+                    if(move_uploaded_file($_FILES['banner']['tmp_name'], ARCHIVES_DIR."eventos/".$newFilename))
+                    {
+                        $evento->setUrlImg(ARCHIVES_DIR."eventos/$newFilename");
+                        $evento->updateUrlImg($_POST['id']);
+                    }
+                    else
+                    {
+                        $evento->setUrlImg(ARCHIVES_DIR."eventos/default.png");
+                        $response =array(
+                            'status' =>'error',
+                            'message'=>'Houve algum problema para salvar o arquivo'
+                        );
+                    }
+                }
+                else
+                    $response =array(
+                        'status' =>'error',
+                        'message'=>'A extensão fornecida não corresponde à ['.implode(',',['png','jpg','jpeg']).']'
+                    );
+            }
+            else
+                $response =array(
+                    'status' =>'error',
+                    'message'=>'Houve algum problema com arquivo enviado. '
+                );
+        }
+        
+        
+        $evento->setTitulo($_POST['titulo']);
+        $evento->setGenero($_POST['genero']);
+        $evento->setDescricao($_POST['descricao']);
+        $evento->setData($_POST['data']);
+        $evento->setHora($_POST['hora']);
+        $evento->setTelefone($_POST['telefone'] ?: NULL);
+        $evento->setCelular($_POST['celular']);
+        $evento->setCep($_POST['cep']);
+        $evento->setLogradouro($_POST['logradouro']);
+        $evento->setNumero($_POST['numero']);
+        $evento->setBairro($_POST['bairro']);
+        $evento->setComplemento($_POST['complemento']  ?: NULL);
+        $evento->setCidade($_POST['cidade']);
+        $evento->setEstado($_POST['estado']);
+        if(empty($response))
+            $response =$evento->updateEvent($_POST['id']);
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
 	}

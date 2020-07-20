@@ -41,7 +41,7 @@ class Router
 
           $route['/usuarios/novo'] =array(
                'controller'=>'AreaRestritaController',
-               'action'    =>'createView'
+               'action'    =>'createUserView'
           );
 
           $route['/usuarios/store'] =array(
@@ -61,7 +61,27 @@ class Router
 
           $route['/area-restrita/eventos/novo'] =array(
                'controller'=>'AreaRestritaController',
-               'action'    =>'eventStore'
+               'action'    =>'createEventView'
+          );
+
+          $route['/area-restrita/eventos/edit'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'editEventView'
+          );
+
+          $route['/area-restrita/eventos/update'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'updateEvent'
+          );
+
+          $route['/area-restrita/eventos/store'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'storeEvent'
+          );
+
+          $route['/area-restrita/eventos/destroy'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'destroyEvent'
           );
 
           $route['/area-restrita/meus-dados'] =array(
