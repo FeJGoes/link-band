@@ -2,7 +2,11 @@
     width: 200px;
     min-height: 100vh;
 }
-
+#home-wall {
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
 .lb-card-event {
     min-width: 250px;
     width: 300px;

@@ -309,6 +309,8 @@ class AreaRestritaController
     public static function destroyEvent()
 	{
         $evento  =new \Models\Classes\Evento;
+        $urlImg =$evento->getEventById($_POST['id'])['data']['url_img'];
+        unlink($urlImg);
         $response =$evento->delete($_POST['id']);
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);

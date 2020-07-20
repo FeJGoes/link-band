@@ -27,7 +27,10 @@
                 </div>
             </div>
             <?php }?>
+        <?php } else {?>
+            <h2 class="">Nenhum evento cadastrado!</h2>
         <?php }?>
+
 
 
     </section>
