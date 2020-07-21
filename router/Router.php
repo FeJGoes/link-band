@@ -29,6 +29,11 @@ class Router
                'action'    =>'update'
           );
 
+          $route['/area-restrita/usuarios/recovery-pass'] =array(
+               'controller'=>'AreaRestritaController',
+               'action'    =>'forgotPass'
+          );
+
           $route['/area-restrita/logout'] =array(
                'controller'=>'AreaRestritaController',
                'action'    =>'logout'

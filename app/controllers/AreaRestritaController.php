@@ -351,8 +351,8 @@ class AreaRestritaController
             $mailer =new \Services\Mailer;
             $mailer->setSender('noreply@linkeband.com','link&band');
             $mailer->setReceiver($_POST['email'],$_POST['nome']);
-            $mailer->setContent('Bem Vindo ao Link&Band',
-            '<h1>Seja Bem Vindo(a)!, '.$_POST['nome'].'</h1><br>
+            $mailer->setContent('[Link&Band] Bem Vindo',
+            '<h1>Seja Bem Vindo(a)! '.$_POST['nome'].'</h1><br>
             <p>Agora você já pode acessar nossa plataforma<p>
             <p><a href="'.HOST.'">link&band</a><p>',
             'Seja Bem Vindo!');
@@ -360,6 +360,44 @@ class AreaRestritaController
         }
         
         echo json_encode($response,JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+	}
+    
+    public static function forgotPass()
+	{
+        $usuario  =new \Models\Classes\Usuario;
+        $u =$usuario->findUserByEmail($_GET['email']);
+        if($u)
+        {
+            $novaSenha =substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'),0,12);
+            $usuario->setSenha($novaSenha);
+            $response =$usuario->updatePass($u['id']);
+            if($response['status']=='ok')
+            {
+                $mailer =new \Services\Mailer;
+                $mailer->setSender('noreply@linkeband.com','link&band');
+                $mailer->setReceiver($u['email'],utf8_encode( $u['nome']));
+                $mailer->setContent('[Link&Band] nova senha',
+                '<h2>Olá, '.$u['nome'].'</h2><br>
+                <h3>Sua nova senha é: '.$novaSenha.'</h3><br>
+                <p>Agora você já pode acessar nossa plataforma<p>
+                <p><a href="'.HOST.'/area-restrita/login">login</a><p>',
+                'Seja Bem Vindo!');
+                $mailer->send();
+                echo json_encode([
+                    'status'  => 'ok',
+                    'message' => 'Senha enviada no email'
+                ],JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+            }
+        }
+        else
+        {
+            echo json_encode([
+                'status'  => 'error',
+                'message' =>  'Email não encontrado na base de dados'
+            ],JSON_UNESCAPED_UNICODE,JSON_UNESCAPED_SLASHES);
+        }
+
+        
 	}
     
     public static function storeEvent()

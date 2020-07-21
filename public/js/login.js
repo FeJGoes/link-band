@@ -5,10 +5,14 @@ var formLogin = document.getElementById('form-login')
 var email    = document.getElementById('email')
 var password = document.getElementById('password')
 var btnLogin = document.getElementById('btn-login')
+var formEsqueciSenha = document.getElementById('form-esqueci-senha')
+var emailEsqueci = document.getElementById('email-esqueci')
+var btnEsqueciSenha = document.getElementById('btn-esqueci-senha')
 /******************************************************************************/
 /******************************* EVENTOS **************************************/
 /******************************************************************************/
 
+btnEsqueciSenha.onclick = () => forgot(formEsqueciSenha, btnEsqueciSenha, emailEsqueci.value)
 btnLogin.onclick = () => login(formLogin, btnLogin, email.value, password.value)
 
 /******************************************************************************/
@@ -45,6 +49,39 @@ function login(form, btn, email, senha)
                     else
                     {
                         btn.innerText = 'entrar'
+                        showNotification(res.message,'warning',5000)
+                    }
+                })
+            .catch(err => console.log(err))
+    }
+}
+
+function forgot(form, btn, email)
+{
+    if(findEmpty(form) === false)
+    {
+        url  = location.origin+'/area-restrita/usuarios/recovery-pass?email='+email
+    
+        fetch(url)
+            .then(res => res.json())
+            .then(res => 
+                {
+                    btn.innerText = 'Aguarde...'
+                    if (res.status == 'ok')
+                    {
+                        setTimeout(()=>{
+                            btn.innerText = 'OK'
+                            showNotification(res.message,'success',5000)
+                    
+                            setTimeout(()=>{
+                                location.reload()
+                    
+                            },4000)
+                        },1500)
+                    }
+                    else
+                    {
+                        btn.innerText = 'enviar'
                         showNotification(res.message,'warning',5000)
                     }
                 })

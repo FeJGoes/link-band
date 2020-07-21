@@ -342,6 +342,15 @@ class Usuario
         return UsuarioDao::emailExist($email);
     }
 
+     /**
+     * Busca usuário através do email
+     * @return Array
+     */
+    public function findUserByEmail(String $email) 
+    {
+        return UsuarioDao::findUserByEmail($email);
+    }
+
 
      /**
      * Cria novo usuário

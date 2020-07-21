@@ -61,6 +61,22 @@ class UsuarioDao
     }
 
     /**
+     * retorna informações de usuário em específico
+     * @param string $email
+     * @return 
+     */
+    public static function findUserByEmail (string $email) 
+    {
+        $pdo   = DB::linkeband();
+        $query = "SELECT id, nome, email, tipo FROM usuarios WHERE email =:email";
+        $stmt  = $pdo->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Verifica informações de login do usuário 
      * @param String $email
      * @param String $senha
