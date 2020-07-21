@@ -1,6 +1,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma para conexões músicais">
+    <meta property="og:image" content="<?=HOST.IMGS_DIR?>band.jpg">
+    <meta property="og:image:type" content="image/jpg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720"> 
     <link rel="shortcut icon" href="<?=HOST.IMGS_DIR?>linkeband.ico" type="image/x-icon">
     <link rel="stylesheet" href="<?=HOST.CSS_DIR?>variables.css<?='?v='.filemtime(BASE_DIR.CSS_DIR.'variables.css')?>">
     <link rel="stylesheet" href="<?=HOST.CSS_DIR?>header.css<?='?v='.filemtime(BASE_DIR.CSS_DIR.'header.css')?>">
